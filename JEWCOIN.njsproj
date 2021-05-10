@@ -14,8 +14,8 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <LastActiveSolutionConfig>Debug|Any CPU</LastActiveSolutionConfig>
-    <Name>JEWCOIN</Name>
-    <NameOfLastUsedPublishProfile>jewcoin - Web Deploy</NameOfLastUsedPublishProfile>
+    <Name>D-Coin</Name>
+    <NameOfLastUsedPublishProfile>D-Coin - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
@@ -178,8 +178,8 @@
     <Content Include="dev\Front\index.html" />
     <Content Include="dev\Front\invitation.ejs" />
     <Content Include="dev\Front\error.ejs" />
-    <None Include="jewcoin - Web Deploy.pubxml" />
-    <None Include="jewcoin - FTP.pubxml" />
+    <None Include="D-Coin - Web Deploy.pubxml" />
+    <None Include="D-Coin - FTP.pubxml" />
     <Content Include="package.json" />
     <Content Include="dev\blockchain.js" />
     <Content Include="dev\test.js" />

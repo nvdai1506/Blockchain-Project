@@ -4,9 +4,9 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Jewish virtual currency</title>
+    <title>DAI virtual currency</title>
     <meta name="description" content="Blockchain project - Mor Cohen">
-    <meta name="keywords" content="Blockchain, project, blockchain, virtual jewish coin, Jewish virtual currency, Mor Cohen">
+    <meta name="keywords" content="Blockchain, project, blockchain, virtual DAI coin, DAI virtual currency, Mor Cohen">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -31,7 +31,12 @@
 <body data-spy="scroll" data-target="#pb-navbar" data-offset="200" dir="ltr" ng-app="BlockExplorer">
     <nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_scrolled-light" id="pb-navbar">
         <div class="container">
-            <a class="navbar-brand" href="#firstSection"><img src="./assets/images/logo_blockchain.png"><img /></a>
+            <a class="navbar-brand" href="#firstSection"  >
+                <p style="font-style: italic; font-family: Impact, fantasy;">
+                    <img style="max-width: 40%;max-height: 20%;" src="./assets/images/DCoin_logo.png"><img />
+                    D-Coin
+                </p>
+            </a>
             <button class="navbar-toggler mr-auto" type="button" data-toggle="collapse" data-target="#probootstrap-navbar" aria-controls="probootstrap-navbar" aria-expanded="false" aria-label="Toggle navigation">תפריט</button>
             <div class="collapse navbar-collapse" id="probootstrap-navbar">
                 <ul class="navbar-nav mr-auto">
@@ -80,29 +85,29 @@
 
             <div class="row align-items-center justify-content-center">
                 <div class="col">
-                    <div class="row">
+                    <div class="row" style="padding-left: 13px;">
                         <h2 style="color: white; font-size:x-large; font-size:15px;"> Welcome&nbsp;</h2>
                         <h2 style="color: gold; font-size:x-large" id="noMemberID"></h2>
                     </div>
-                    <h2 style="color: white; font-size: 15px;">You are now connected to the jewCOIN blockchain network</h2>
-                    <p class="alert alert-light no-data-text" style="outline: 2px dotted #639ce4">
-                        <span style="font-weight: bold;"><i class="fas fa-chalkboard-teacher"></i> First time?- </span> <a href="#" id="cd-tour-trigger" style="color: #6166ed; font-weight: bold; font-style: italic;">Click here</a> For a guided virtual tour.
+                    <h2 style="color: white; font-size: 15px;text-align: left;">You are now connected to the D-Coin blockchain network</h2>
+                    <p class="alert alert-light no-data-text" style="outline: 2px dotted #639ce4;text-align: left;">
+                        <span style="font-weight: bold; "><i class="fas fa-chalkboard-teacher"></i> First time?- </span> <a href="#" id="cd-tour-trigger" style="color: #6166ed; font-weight: bold; font-style: italic;">Click here</a> For a guided virtual tour.
                     </p>
                     <p style="color: white;">* Reminder: Do not share the private key provided when registering!</p>
 
                     <div class="container" style="padding-top: 0px;">
                         <hr style="background-color: #262f36" />
                         <div class="row">
-                            <h5 class="col-6" style="color: #fff;"><i class="fas fa-comments"></i> chat</h5>
-                            <p class="col-6 text-left" style="color: gold">From now on you can view messages sent online</p>
+                            <h5 class="col-6" style="color: #fff;text-align: left;max-width: 10%;"><i class="fas fa-comments"></i> chat</h5>
+                            <p class="col-6 text-left" style="color: gold; ">From now on you can view messages sent online</p>
                         </div>
                         <div class="row">
-                            <div class="panel-body" style="overflow:auto; overflow-x:hidden; border-radius: 15px; box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.10);">
+                            <div class="panel-body" style="overflow:auto; overflow-x:hidden; border-radius: 15px; box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.10);height: 100%;">
                                 <ul class="chat" id="chat">
                                     <li class="right clearfix">
-                                        <div class="chat-body clearfix">
-                                            <div class="header">
-                                                <p class="pull-right primary-font" style="color: gold">system notice </p>
+                                        <div class="chat-body clearfix" style = "text-align: left; padding-left: 10px;">
+                                            <div class="header" style = "text-align: left;">
+                                                <p class="pull-left primary-font" style="color: gold;">*System notice </p>
                                             </div><br />
                                             <p>
                                                 Hello, From now on you will be able to see messages received in chat in real time<br />
@@ -134,7 +139,7 @@
         <li class="cd-single-step">
             <span>Step 1</span>
 
-            <div class="cd-more-info right">
+            <div class="cd-more-info left">
                 <h3>step one</h3>
                 <p>This is the chat - everyone can send messages and request invitations if you have not yet been invited.</p>
             </div>
@@ -152,7 +157,7 @@
         <li class="cd-single-step">
             <span>Step 3</span>
 
-            <div class="cd-more-info left">
+            <div class="cd-more-info right">
                 <h2>third phase</h2>
                 <p>Transactions - Here you can transfer coins from your personal wallet to another user's wallet.</p>
                 <p>All fields must be entered, and at the end of the transaction it will be transferred to the "Transactions pending" department (next step)</p>
@@ -463,7 +468,7 @@
                 <div class="col-lg-8 pl-md-5 pl-sm-0">
                     <div class="row">
                         <div class="col">
-                            <h2>Submit JewCOIN's</h2>
+                            <h2>Submit D-Coin's</h2>
                             <p class="pb_font-20">Transfer virtual currency (JCN) to another account</p>
                         </div>
                     </div>
@@ -791,7 +796,7 @@
                         </ul>
                     </div>
                     <p class="pb_font-14">
-                        <a href="index.html">JewCOIN</a>
+                        <a href="index.html">D-Coin</a>
                         <br>
                         Software and designed by Mor Cohen -<a href="http://morc.co.il/">Portfolio</a>
                     </p>

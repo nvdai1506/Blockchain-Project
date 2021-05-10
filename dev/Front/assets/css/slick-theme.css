@@ -56,22 +56,22 @@
 
 .slick-prev {
   left: -25px; }
-  [dir="rtl"] .slick-prev {
+  [dir="ltr"] .slick-prev {
     left: auto;
     right: -25px; }
   .slick-prev:before {
     content: "←"; }
-    [dir="rtl"] .slick-prev:before {
+    [dir="ltr"] .slick-prev:before {
       content: "→"; }
 
 .slick-next {
   right: -25px; }
-  [dir="rtl"] .slick-next {
+  [dir="ltr"] .slick-next {
     left: -25px;
     right: auto; }
   .slick-next:before {
     content: "→"; }
-    [dir="rtl"] .slick-next:before {
+    [dir="ltr"] .slick-next:before {
       content: "←"; }
 
 /* Dots */

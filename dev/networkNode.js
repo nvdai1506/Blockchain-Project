@@ -391,10 +391,10 @@ io.on('connection', (socket) => {
                                     });
 
                                     var mailOptions = {
-                                        from: 'JewCOIN',
+                                        from: 'D-Coin',
                                         to: email,
-                                        subject: 'You have been invited to the JewCOIN blockchain network',
-                                        text: 'You have received an invitation to the JewCOIN blockchain network \n To activate the account, click on the attached link:\n\n' + uri
+                                        subject: 'You have been invited to the D-Coin blockchain network',
+                                        text: 'You have received an invitation to the D-Coin blockchain network \n To activate the account, click on the attached link:\n\n' + uri
                                     };
 
                                     /*  -send the email-  */

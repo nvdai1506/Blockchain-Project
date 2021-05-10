@@ -56,7 +56,7 @@
   display: none; }
   .slick-slide:focus {
     outline: none; }
-  [dir="rtl"] .slick-slide {
+  [dir="ltr"] .slick-slide {
     float: right; }
   .slick-slide img {
     display: block; }
