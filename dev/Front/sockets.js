@@ -15,7 +15,7 @@ socket.on('connect', () => {
 
 function sendMessage(message) {
     if (!message.replace(/\s/g, '').length) {
-        alert("לא ניתן לשלוח הודעה ריקה");
+        alert("An empty message could not be sent");
     }
     else {
         message = message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -38,12 +38,12 @@ socket.on('newMessage', (message) => {
     var id;
     $('#chat').append(
         '<li class="right clearfix">' +
-        '<div class="chat-body clearfix">' +
+        '<div class="chat-body clearfix" style="text-align:left;">' +
         '<div class="header">' +
         '<div class="row">' +
         '<strong class="col-6 pull-right primary-font">' +
         '<span style="color: gold">' +
-        'מספר משתמש: ' +
+        'User number: ' +
         '</span>' +
         (message.id === socket.id ? '<span style="color: #1d82ff;">' : '<span>') +
         message.id +
@@ -113,14 +113,16 @@ socket.on('PT', (pt) => {
 });
 socket.on('mineSuccess', (trueOrFalse) => {//after mining success - display a meassage to all users
     function removePopUp() {
+        console.log("removePopUp")
         $("#alert").remove();
     }
     if (trueOrFalse === true) {//i could use JQuery
+        console.log("mineSuccess: true")
         var alert = document.createElement("div");
         alert.setAttribute("class", "alert alert-success");
         alert.setAttribute("id", "alert");
         alert.setAttribute("style", "position: fixed; bottom: 0; width: 100 %; z-index:1000;");
-        alert.innerHTML = '<strong>' + "הודעה גלובלית - " + '</strong>' + "אחד המשתמשים ביצע כריה בהצלחה!";
+        alert.innerHTML = '<strong>' + "Global message " + '</strong>' + "One user successfully mined!";
         document.getElementsByTagName("body")[0].appendChild(alert);
         setTimeout(removePopUp, 5000);
     }

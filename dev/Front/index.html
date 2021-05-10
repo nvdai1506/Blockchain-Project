@@ -355,12 +355,12 @@
                                 <h3 class="table-title" ng-if="addressData">Details of transactions</h3>
                                 <p ng-if="addressData">Displays all transactions made by the user: <small style="color: #1d82ff">{{searchValue}}</small></p>
                                 <p id="balance-text" ng-if="addressData"><mark>Remaining amount:{{ addressData.addressBalance }} <small>DCN</small></mark></p>
-                                <table class="table table-striped text-right" ng-if="addressData" style="display: inline; overflow: auto">
-                                    <thead class="text-right">
+                                <table class="table table-striped text-left" ng-if="addressData" style="display: inline; overflow: auto">
+                                    <thead class="text-left">
                                         <tr>
-                                            <th scope="col" class="text-right">sender:</th>
-                                            <th scope="col" class="text-right">addressee:</th>
-                                            <th scope="col" class="text-right">sum:</th>
+                                            <th scope="col" class="text-left">sender:</th>
+                                            <th scope="col" class="text-left">addressee:</th>
+                                            <th scope="col" class="text-left">sum:</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -585,7 +585,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">סגור</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">closed</button>
                                     </div>
                                 </div>
                             </div>
@@ -612,12 +612,12 @@
             <div class="row">
                 <small style="color: red;">*Note - Mining cannot be performed when the table is empty / contains only one transfer from system-reward!</small>
                 <table id="lastTransactionsTable" class="table table-hover table-bordered" style="overflow: auto">
-                    <thead class="text-right" style="background-image: -webkit-gradient(linear, left bottom, right top, from(#6777ed), to(#81cbec)); background-attachment:fixed; color: #fff">
-                        <tr class="text-right">
-                            <th class="text-right">Transaction ID</th>
-                            <th class="text-right">sender</th>
-                            <th class="text-right">addressee</th>
-                            <th class="text-right">sum</th>
+                    <thead class="text-left" style="background-image: -webkit-gradient(linear, left bottom, right top, from(#6777ed), to(#81cbec)); background-attachment:fixed; color: #fff">
+                        <tr class="text-left">
+                            <th class="text-left">Transaction ID</th>
+                            <th class="text-left">sender</th>
+                            <th class="text-left">addressee</th>
+                            <th class="text-left">sum</th>
                         </tr>
                     </thead>
                     <tbody id="tbody" style="background: #fff"></tbody>
@@ -952,7 +952,7 @@
         app.controller('miningController', function ($scope, $http, $timeout) {
 
             $scope.mineSuccesss = null;
-
+            console.log("miningController")
             $scope.mine = function () {
                 var key1 = prompt("To activate the function Enter your private key:", "");
                 var key2 = prompt("To activate the function Enter your public key:", "");
@@ -969,10 +969,13 @@
                             alert("Incompatible keys");
                         }
                         else {
+                            console.log("ok")
                             $http.get('/mine')
                                 .then(response => {//mining sccess
+                                    console.log(response)
                                     $("#lastTransactionsTable td").remove();
                                     $.get('/emitMiningSuccess', (data, status) => {//http request via JQuery
+                                        console.log("emitMiningSuccess")
                                         console.log(data);
                                     });
                                     $scope.mineSuccesss = true;

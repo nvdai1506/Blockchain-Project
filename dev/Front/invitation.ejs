@@ -29,50 +29,50 @@
 <body data-spy="scroll" data-target="#pb-navbar" data-offset="200" dir="ltr" ng-app="invite">
     <nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_scrolled-light" id="pb-navbar">
         <div class="container">
-            <a class="navbar-brand" href="#firstSection"><img src="/styles/images/logo_blockchain.png"><img /></a>
+            <a class="navbar-brand" href="#firstSection"><img src="/styles/images/DCoin_logo.png" style="width: 100px;"><img /></a>
             <button class="navbar-toggler mr-auto" type="button" data-toggle="collapse" data-target="#probootstrap-navbar" aria-controls="probootstrap-navbar" aria-expanded="false" aria-label="Toggle navigation">menu</button>
+            <div style="width: 400%; height:100%;"></div>
             <div class="collapse navbar-collapse" id="probootstrap-navbar">
                 <ul class="navbar-nav mr-auto">
-
-
                     <li class="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0"><a class="nav-link" href="http://localhost:3001/"><span class="pb_rounded-4 px-4" style="color: gold">Go to the site</span></a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <section class="pb_cover_v3 overflow-hidden cover-bg-indigo cover-bg-opacity text-right pb_gradient_v3 pb_slant-light" id="section-home">
+    <section class="pb_cover_v3 overflow-hidden cover-bg-indigo cover-bg-opacity text-left pb_gradient_v3 pb_slant-light" id="section-home">
         <div class="container" ng-controller="invitationController">
 
             <div class="row align-items-center justify-content-center">
                 
                 <div class="col-md-6 relative align-self-center">
                 
-                    <h1 style="color:#fff"><i class="fas fa-user-plus"></i> You have received an invitation to join the network </h1>
+                    <h1 style="color:#fff; font-size: 35px;"><i class="fas fa-user-plus"></i> You have received an invitation to join the network </h1>
 
                     <img id="bc_white_png" class="bc_white_png" src="/styles/images/bc_white.png" alt="image error" />
                     <form class="bg-white rounded pb_form_v1" style="position:relative">
                         <p><small><mark>Copy and keep the keys in a safe place (key cannot be recovered and can only be given once!) </mark></small></p>
                         <p> This is your private key </p>
                         <div class="form-group">
-                            <input type="text" class="form-control pb_height-50 reverse" placeholder="<%= privateKey %>" >
+                            <input type="text" class="form-control pb_height-50 reverse" value="<%= privateKey %>" >
                         </div>
                         <p> This is your public key </p>
                         <div class="form-group">
-                            <input type="text" class="form-control pb_height-50 reverse" placeholder="<%= publicKey %>" >
+                            <input type="text" class="form-control pb_height-50 reverse" value="<%= publicKey %>" >
                         </div>
                         <div class="form-group">
-                            <input type="submit" class="btn btn-primary btn-lg btn-block pb_btn-pill btn-shadow-strong" value="Click to confirm registration in the system" ng-click="confirmInvitation(<%= JSON.stringify(publicKey) %>, <%= JSON.stringify(invitationID) %>, <%= JSON.stringify(senderID) %>)">
+                            <input type="submit" class="btn btn-primary btn-lg btn-block pb_btn-pill btn-shadow-strong" value="Click to confirm registration" ng-click="confirmInvitation(<%= JSON.stringify(publicKey) %>, <%= JSON.stringify(invitationID) %>, <%= JSON.stringify(senderID) %>)">
                         </div>
                     </form>
-                    <p style="color:#fff" class="text-center"><small>*please pay attention! - Keep your private key in a safe place and do not share it with anyone! </small></p>
+                    <p style="color:rgb(116, 8, 8); padding-top: 10px;" class="text-center"><small></small>*please pay attention! - Keep your private key in a safe place and do not share it with anyone! </small></p>
                 </div>    
             </div>
         </div>    
     </section>
+    
     <!-- END section -->
 
-    <footer class="pb_footer bg-light" role="contentinfo">
+    <footer class="pb_footer bg-light" role="contentinfo" style>
         <div class="container">
 
             <div class="row">
@@ -96,7 +96,7 @@
 
     <!-- loader -->
     <div id="pb_loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#1d82ff" /><div style="position: fixed; z-index: 100000; top:39%; right: 44%;"><img src="/styles/css/logo_blockchain_scrolled - Copy - Copy.png"><img /></div></svg></div>
-
+    
     <script src="/styles/js/jquery.min.js"></script>
 
     <script src="/styles/js/popper.min.js"></script>
