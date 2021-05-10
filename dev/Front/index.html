@@ -1,0 +1,1044 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Jewish virtual currency</title>
+    <meta name="description" content="Blockchain project - Mor Cohen">
+    <meta name="keywords" content="Blockchain, project, blockchain, virtual jewish coin, Jewish virtual currency, Mor Cohen">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/mathjs@5.2.2/dist/math.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/bootstrap/bootstrap.css">
+
+    <link rel="stylesheet" href="./assets/fonts/fontawesome/css/font-awesome.min.css">
+
+    <link href="assets/css/style1.css" rel="stylesheet" />
+    <script src="assets/js/modernizr.js"></script>
+
+    <link rel="stylesheet" href="./assets/css/slick.css">
+    <link rel="stylesheet" href="./assets/css/slick-theme.css">
+    <link rel="stylesheet" href="./assets/css/helpers.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/landing-2.css">
+</head>
+<body data-spy="scroll" data-target="#pb-navbar" data-offset="200" dir="rtl" ng-app="BlockExplorer">
+    <nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_scrolled-light" id="pb-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#firstSection"><img src="./assets/images/logo_blockchain.png"><img /></a>
+            <button class="navbar-toggler mr-auto" type="button" data-toggle="collapse" data-target="#probootstrap-navbar" aria-controls="probootstrap-navbar" aria-expanded="false" aria-label="Toggle navigation">תפריט</button>
+            <div class="collapse navbar-collapse" id="probootstrap-navbar">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="#section-home">Block Explorer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#section-features">My wallet</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#makeTransaction">Make a deal</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#lastTransactions" style="color:gold !important;"><i class="fas fa-coins"></i> mining</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About the project</a></li>
+
+                    <li class="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0"><a class="nav-link" href="" target="_blank" data-toggle="modal" data-target="#inviteModal"><span class="pb_rounded-4 px-4" style = "font-size: 8px;">Attach a new member</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Modal -->
+    <div class="modal fade text-center py-5 subscribeModal-lg" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-controller="inviteController">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="top-strip"></div>
+                    <h3 class="pt-5 mb-0 text-secondary">Invite a network member!</h3>
+                    <p class="pb-1 text-muted"><small>Send a friend an invitation and when he registers, you will receive 50 coins for your digital wallet!</small></p>
+                    <form>
+                        <div class="input-group mb-3 w-75 mx-auto">
+                            <input type="text" class="form-control" placeholder="Enter the guest's email address here" aria-label="Recipient's username" aria-describedby="button-addon2" ng-model="email">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="button-addon2" ng-click="checkeys(email)"><i class="fa fa-paper-plane" style="color: #fff;"></i></button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <small><mark>Please bring a private and public key for your verification.</mark></small>
+                    <p class="pb-1 text-muted"><small>The email address is not stored in the system and is only needed to send the order.</small></p>
+                    <div class="bottom-strip"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END nav -->
+
+    <section class="pb_cover_v3 overflow-hidden text-right pb_gradient_v1" style="background: #262f36; padding-top: 50px;" id="firstSection">
+        <div class="container">
+
+
+
+            <div class="row align-items-center justify-content-center">
+                <div class="col">
+                    <div class="row">
+                        <h2 style="color: white; font-size:x-large; font-size:15px;"> Welcome&nbsp;</h2>
+                        <h2 style="color: gold; font-size:x-large" id="noMemberID"></h2>
+                    </div>
+                    <h2 style="color: white; font-size: 15px;">You are now connected to the jewCOIN blockchain network</h2>
+                    <p class="alert alert-light no-data-text" style="outline: 2px dotted #639ce4">
+                        <span style="font-weight: bold;"><i class="fas fa-chalkboard-teacher"></i> First time?- </span> <a href="#" id="cd-tour-trigger" style="color: #6166ed; font-weight: bold; font-style: italic;">Click here</a> For a guided virtual tour.
+                    </p>
+                    <p style="color: white;">* Reminder: Do not share the private key provided when registering!</p>
+
+                    <div class="container" style="padding-top: 0px;">
+                        <hr style="background-color: #262f36" />
+                        <div class="row">
+                            <h5 class="col-6" style="color: #fff;"><i class="fas fa-comments"></i> chat</h5>
+                            <p class="col-6 text-left" style="color: gold">From now on you can view messages sent online</p>
+                        </div>
+                        <div class="row">
+                            <div class="panel-body" style="overflow:auto; overflow-x:hidden; border-radius: 15px; box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.10);">
+                                <ul class="chat" id="chat">
+                                    <li class="right clearfix">
+                                        <div class="chat-body clearfix">
+                                            <div class="header">
+                                                <p class="pull-right primary-font" style="color: gold">system notice </p>
+                                            </div><br />
+                                            <p>
+                                                Hello, From now on you will be able to see messages received in chat in real time<br />
+                                                Write a message in the text box and click "Send" to show the message to the other connected users<br />
+                                                <small>* Messages are not saved and deleted after leaving the browser. The message will only be displayed to the person who was logged in at the time of sending the message</small>
+                                            </p>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <br />
+                            <div class="input-group" style="padding-top:5px; padding-bottom:5px;">
+                                <input id="btn-input" style="background-color: #f2f2f2; border-radius: 5px; box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.10);" type="text" class="form-control input-sm" placeholder="Insert a message" name="message" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary btn-sm" style="box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.10); height:40px; padding-right:50px; padding-left:50px;" id="btn-chat" onclick="sendMessage(document.getElementById('btn-input').value)">
+                                        Send
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <ul class="cd-tour-wrapper">
+        <li class="cd-single-step">
+            <span>Step 1</span>
+
+            <div class="cd-more-info right">
+                <h3>step one</h3>
+                <p>This is the chat - everyone can send messages and request invitations if you have not yet been invited.</p>
+            </div>
+        </li>
+
+        <li class="cd-single-step">
+            <span>Step 2</span>
+
+            <div class="cd-more-info bottom">
+                <h2>second level</h2>
+                <p>This is your wallet - here you can enter the public key you received when you registered and see transactions in the account.</p>
+            </div>
+        </li>
+
+        <li class="cd-single-step">
+            <span>Step 3</span>
+
+            <div class="cd-more-info left">
+                <h2>third phase</h2>
+                <p>Transactions - Here you can transfer coins from your personal wallet to another user's wallet.</p>
+                <p>All fields must be entered, and at the end of the transaction it will be transferred to the "Transactions pending" department (next step)</p>
+            </div>
+        </li>
+
+        <li class="cd-single-step">
+            <span>Step 4</span>
+
+            <div class="cd-more-info right">
+                <h2>Fourth stage</h2>
+                <p>Transactions awaiting mining - Every transaction that is made moves here and waits for any user on the network who clicks on the mining button and thus "approves" these transactions.</p>
+            </div>
+        </li>
+    </ul>
+    <!-- END section -->
+
+
+    <section class="pb_cover_v3 overflow-hidden cover-bg-indigo cover-bg-opacity text-right pb_gradient_v3 pb_slant-light" id="section-home">
+        <div class="container" ng-controller="searchInBlockchainController">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-6">
+                    <h2 class="heading">Block Explorer</h2>
+                    <h2 style="color: white;">Blockchain search</h2>
+                    <div class="sub-heading">
+                        <p class="mb-4">Block Explorer - As implied by the word itself it is actually "block researcher". A blockchain system consists of blocks, so that in each block there is a record of all the transactions made in the block. Here we can perform a search by "Block ID", "User Public Key", "Transaction ID".</p>
+                        <p class="mb-5"><a class="btn btn-success btn-lg pb_btn-pill smoothscroll" href="#lastTransactions"><span class="pb_font-14 text-uppercase pb_letter-spacing-1"><span>See recent deals and start the mining process!</span></span></a></p>
+
+                    </div>
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-5 relative align-self-center">
+                    <img id="bc_white_png" class="bc_white_png" src="assets/images/bc_white.png" alt="image error" />
+                    <form ng-submit="search(searchValue)" class="bg-white rounded pb_form_v1" style="position:relative">
+                        <div class="form-group">
+                            <input type="text" class="form-control pb_height-50 reverse" placeholder="Enter an encrypted address here" ng-model="searchValue">
+                        </div>
+                        <div class="form-group">
+                            <div class="pb_select-wrap">
+                                <select class="form-control pb_height-50 reverse" ng-model="searchType">
+                                    <option value="" selected>Search by</option>
+                                    <option value="block">Block ID</option>
+                                    <option value="transaction">Transaction ID</option>
+                                    <option value="address">Public Key - All transactions made by this user</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-lg btn-block pb_btn-pill btn-shadow-strong" value="Click to search" data-toggle="modal" data-target="#BEModal">
+                        </div>
+                        <p ng-if="!block && !transaction && !addressData && initialSearchMade" class="no-data-text">
+                            No results have been found.
+                        </p>
+                    </form>
+                    <!-- Modal -->
+                    <div class="modal fade" id="BEModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Block Explorer</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+
+                                    <div class="row">
+                                        <div class="col-md-10 offset-md-2">
+
+                                            <span ng-if="!block && !transaction && !addressData && initialSearchMade">
+                                                No results have been found
+                                            </span>
+
+                                            <!-- 'display block' table -->
+                                            <h3 class="table-title" ng-if="block">Search by block ID </h3>
+                                            <table class="table table-striped" ng-if="block">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="bold">Block ID:</td>
+                                                        <td><small>{{ block.hash }}</small></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="bold">index:</td>
+                                                        <td>{{ block.index }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="bold">Time stamp:</td>
+                                                        <td>{{ block.timestamp }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="bold">date and time:</td>
+                                                        <td><small>{{ block.date }}</small></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="bold">Nonce:</td>
+                                                        <td>{{ block.nonce }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="bold">Previous block ID:</td>
+                                                        <td>{{ block.previousBlockHash }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="bold">Number of transactions:</td>
+                                                        <td>{{ block.transactions.length }} <a href="#" style="color:#6678ed">&nbsp; <small>View all transactions in the block</small></a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <!-- end 'display block' table -->
+                                            <!-- 'display transaction' table -->
+                                            <h3 class="table-title" ng-if="transaction">Search by ID / transaction number</h3>
+                                            <table class="table table-striped" ng-if="transaction">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="bold">sender:</td>
+                                                        <td>{{ transaction.sender }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="bold">addressee:</td>
+                                                        <td>{{ transaction.recipient }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="bold">Amount of coins:</td>
+                                                        <td>{{ transaction.amount }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <!-- end 'display transaction' table -->
+                                            <!-- 'display address' table -->
+                                            <h3 class="table-title" ng-if="addressData">Search using a public key</h3>
+                                            <p ng-if="addressData">Displays all transactions made by the user: <small style="color: #1d82ff">{{searchValue}}</small></p>
+                                            <p id="balance-text" ng-if="addressData"><mark>Current balance: {{ addressData.addressBalance }}JCN</mark></p>
+                                            <table class="table table-striped text-right" ng-if="addressData">
+                                                <thead class="text-right">
+                                                    <tr>
+                                                        <th scope="col" class="text-right">sender:</th>
+                                                        <th scope="col" class="text-right">addressee:</th>
+                                                        <th scope="col" class="text-right">Amount of coins:</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="transaction in addressData.addressTransactions">
+                                                        <td>{{ transaction.sender }}</td>
+                                                        <td>{{ transaction.recipient }}</td>
+                                                        <td>{{ transaction.amount }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <!-- end 'display address' table -->
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">closed</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END section -->
+
+    <section class="pb_section bg-light pb_slant-white pb_pb-250" id="section-features">
+        <div class="container" ng-controller="walletController" style="padding-bottom: 150px; padding-top: 150px;">
+            <div class="row justify-content-center mb-2">
+                <div class="col-md-6 text-center mb-2">
+                    <h2>My wallet</h2>
+                    <h5 class="text-uppercase pb_font-15 mb-2 pb_color-dark-opacity-3 pb_letter-spacing-2"><strong>See up-to-date information about your wallet</strong></h5>
+                </div>
+            </div>
+            <form ng-submit="search(searchValue)">
+                <div class="form-group">
+                    <input type="text" class="form-control pb_height-50" placeholder="Enter your public key here" ng-model="searchValue" ng-disabled="dis">
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-7"><input type="submit" id="myBtn" class="btn btn-secondary align-items-center " value="View information" data-toggle="collapse" data-target="#collapseWallet" aria-expanded="false" aria-controls="collapseWallet" ng-disabled="dis"></div>
+                        <div class="col-5">The public key is the encrypted code <span style="font-weight: bold">The second</span> Given to you when you register for the site</div>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="collapse" id="collapseWallet">
+                    <div class="row">
+                        <div class="col-6">
+                            <div ng-if="addressData" class="card card-body ">
+
+                                <h3 class="table-title" ng-if="addressData">Details of transactions</h3>
+                                <p ng-if="addressData">Displays all transactions made by the user: <small style="color: #1d82ff">{{searchValue}}</small></p>
+                                <p id="balance-text" ng-if="addressData"><mark>Remaining amount:{{ addressData.addressBalance }} <small>JCN</small></mark></p>
+                                <table class="table table-striped text-right" ng-if="addressData" style="display: inline; overflow: auto">
+                                    <thead class="text-right">
+                                        <tr>
+                                            <th scope="col" class="text-right">sender:</th>
+                                            <th scope="col" class="text-right">addressee:</th>
+                                            <th scope="col" class="text-right">sum:</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="transaction in addressData.addressTransactions">
+                                            <td style="font-size:x-small; max-width: 220px;">{{ transaction.sender }}</td>
+                                            <td style="font-size:x-small; max-width: 220px;">{{ transaction.recipient }}</td>
+                                            <td style="font-size:x-small; max-width: 100px;">{{ transaction.amount }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div ng-if="addressData" class="card card-body ">
+
+                                <h3 class="table-title" ng-if="addressData">Details of recent expenses</h3>
+                                <p ng-if="addressData"><mark>A graph detailing recent payments</mark></p>
+                                <p id="balance-text" ng-if="addressData">Sorted by dates and amounts sent on these dates by the user: <small>{{searchValue}}</small></p>
+
+
+                                <canvas ng-if="addressData" id="myChart" width="100" height="50"></canvas>
+                                <script>
+
+                                    document.getElementById("myBtn").addEventListener("click", displayChart);
+
+                                    function displayChart() {
+                                        setTimeout(function () {
+
+                                            var dom_el = document.querySelector('[ng-controller="walletController"]');
+                                            var ng_el = angular.element(dom_el);
+                                            var ng_el_scope = ng_el.scope();
+                                            var amounts = ng_el_scope.addressData;
+                                            var transactions = amounts.addressTransactions;
+                                            //console.log(ng_el_scope.addressData.addressBalance);
+                                            //console.log(transactions[0].date);
+
+
+
+                                            var ctx = document.getElementById("myChart").getContext('2d');
+                                            var myLineChart = new Chart(ctx, {
+                                                type: 'line',
+                                                data: {
+                                                    labels: [],
+                                                    datasets: [{
+                                                        label: 'Account Balance',
+                                                        data: [],
+                                                        borderWidth: 1
+                                                    }]
+                                                },
+                                                options: {
+                                                    scales: {
+                                                        yAxes: [{
+                                                            ticks: {
+                                                                beginAtZero: false
+                                                            }
+                                                        }]
+                                                    }
+                                                }
+                                            });
+
+                                            for (var i = 0; i < transactions.length; i++) {
+                                                myLineChart.data.datasets[0].data.push(ng_el_scope.addressData.amountArr[i]);
+                                                myLineChart.data.labels.push(transactions[i].date);
+                                                myLineChart.update();
+                                            }
+                                            //console.log(myLineChart);
+                                        }, 1000);
+                                    }
+
+                                </script>
+
+                                <a ng-if="addressData" href="#lastTransactions" class="text-left"><small>View recent transactions and start the mining process</small></a>
+
+                            </div>
+
+                        </div>
+
+                        <div ng-if="!block && !transaction && !addressData && initialSearchMade" class="no-data-text">
+
+
+                            <p><mark>No results found for the above search key: <small>{{searchValue}}</small></mark></p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- END section -->
+
+
+
+
+    <section class="pb_section pb_slant-light" id="makeTransaction">
+        <div class="container" ng-controller="transactionController" ng-init="acceptedTransaction" style="padding-top: 100px;">
+            <div class="row">
+                <div class="col-lg-4 mb-5">
+                    <img src="./assets/images/Blockchain.png" alt="Image placeholder" class="img-fluid">
+                </div>
+                <div class="col-lg-8 pl-md-5 pl-sm-0">
+                    <div class="row">
+                        <div class="col">
+                            <h2>Submit JewCOIN's</h2>
+                            <p class="pb_font-20">Transfer virtual currency (JCN) to another account</p>
+                        </div>
+                    </div>
+
+                    <form name="sendCoins" novalidate>
+                        <div class="row">
+                            <div class="col-lg">
+
+                                <div class="media pb_feature-v2 text-right mb-1 mt-5">
+                                    <i class="fas fa-dollar-sign fa-1x"></i>
+                                    <div class="media-body">
+                                        <h3 class="mt-2 mb-2 heading">Amount to be sent</h3>
+                                        <input type="text" name="amountToTransfer" class="form-control text-sans-serif" placeholder="For example: 50" ng-model="amountToTransfer" required>
+
+                                    </div>
+                                </div>
+
+                                <div class="media pb_feature-v2 text-right mb-1 mt-5">
+                                    <i class="fas fa-user-plus"></i>
+                                    <div class="media-body">
+                                        <h3 class="mt-2 mb-2 heading">The sender</h3>
+                                        <input type="text" class="form-control text-sans-serif" placeholder="Enter your public key" name="pubKey" ng-model="pubKey" required>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg">
+
+                                <div class="media pb_feature-v2 text-right mb-1 mt-5">
+                                    <i class="fas fa-key fa-1x"></i>
+                                    <div class="media-body">
+                                        <h3 class="mt-2 mb-2 heading">privateKey</h3>
+                                        <input type="text" class="form-control text-sans-serif" placeholder="Enter your secret key" name="privKey" ng-model="privKey" required>
+                                    </div>
+                                </div>
+                                <div class="media pb_feature-v2 text-right mb-1 mt-5">
+                                    <i class="fas fa-user-check"></i>
+                                    <div class="media-body">
+                                        <h3 class="mt-2 mb-2 heading">The recipient</h3>
+                                        <input type="text" class="form-control text-sans-serif" placeholder="Enter the recipient's public key" name="pubKeyOfRecipient" ng-model="pubKeyOfRecipient" required>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-7"></div>
+                                    <div class="col-5">
+                                        <div data-toggle="modal" data-target="#transactionModal">
+                                            <a class="tip"><input type="submit" class="btn btn-success pb_btn-pill" value="Make a transfer" ng-click="transactionCoins(amountToTransfer, privKey, pubKey, pubKeyOfRecipient)" ng-disabled="sendCoins.amountToTransfer.$invalid || sendCoins.pubKey.$invalid || sendCoins.pubKeyOfRecipient.$invalid || sendCoins.privKey.$invalid"><div style="color: white" ng-hide="sendCoins.amountToTransfer.$valid && sendCoins.pubKey.$valid && sendCoins.pubKeyOfRecipient.$valid && sendCoins.privKey.$valid"><small>The button will become active <span style="color: yellow">to another</span> Complete the form</small></div></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <span class="text-sans-serif text-right" ng-show="sendCoins.amountToTransfer.$touched && sendCoins.amountToTransfer.$invalid || sendCoins.pubKey.$touched && sendCoins.pubKey.$invalid || sendCoins.pubKeyOfRecipient.$touched && sendCoins.pubKeyOfRecipient.$invalid || sendCoins.privKey.$touched && sendCoins.privKey.$invalid"><mark> In order to submit the form - you need to enter all the fields in the form</mark></span><br />
+                        <span class="text-sans-serif text-right" ng-show="sendCoins.amountToTransfer.$touched && sendCoins.amountToTransfer.$invalid || sendCoins.pubKey.$touched && sendCoins.pubKey.$invalid || sendCoins.pubKeyOfRecipient.$touched && sendCoins.pubKeyOfRecipient.$invalid || sendCoins.privKey.$touched && sendCoins.privKey.$invalid"><small style="color: red; font-weight: bold; text-decoration: underline">The following errors were detected:</small></span>
+                        <br />
+                        <span class="text-sans-serif text-right" ng-show="sendCoins.amountToTransfer.$touched && sendCoins.amountToTransfer.$invalid"><small>It is mandatory to enter an amount to send</small></span>
+                        <br />
+                        <span class="text-sans-serif text-right" ng-show="sendCoins.pubKey.$touched && sendCoins.pubKey.$invalid"><small>It is mandatory to enter a public key of the sender</small></span>
+                        <br />
+                        <span class="text-sans-serif text-right" ng-show="sendCoins.pubKeyOfRecipient.$touched && sendCoins.pubKeyOfRecipient.$invalid"><small>The recipient's public key must be entered</small></span>
+                        <br />
+                        <span class="text-sans-serif text-right" ng-show="sendCoins.privKey.$touched && sendCoins.privKey.$invalid"><small>It is mandatory to enter a personal key of the sender</small></span>
+
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="transactionModal" tabindex="-1" role="dialog" aria-labelledby="transactionModal" aria-hidden="true">
+
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">deal verification</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="card card-body ">
+
+                                                <h3 class="table-title" ng-if="acceptedTransaction">The transaction was completed successfully</h3>
+                                                <p ng-if="acceptedTransaction" style="color: red; font-weight: bold">Important Note: The coins will enter the recipient's digital wallet only after the mining of one of the network users</p>
+
+                                                <!-- 'display transaction' table -->
+                                                <h3 class="table-title" ng-if="acceptedTransaction">Invoicing:</h3>
+                                                <table class="table table-striped" ng-if="acceptedTransaction">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="bold">sender:</td>
+                                                            <td>{{ pubKey }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="bold">addressee:</td>
+                                                            <td>{{ pubKeyOfRecipient }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="bold">Amount of coins:</td>
+                                                            <td>{{ amountToTransfer }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!-- end 'display transaction' table -->
+                                                <a class="text-left" ng-if="acceptedTransaction"><mark>Download invoice</mark></a>
+                                                <h3 class="table-title" ng-if="declineTransaction">The deal failed</h3>
+                                                <p ng-if="declineTransaction">For one of the following reasons:</p>
+                                                <ul ng-if="declineTransaction">
+                                                    <li ng-if="declineTransaction">The sender / recipient public key was not entered correctly</li>
+                                                    <li ng-if="declineTransaction">The sender's private key does not match the sender's public key</li>
+                                                    <li ng-if="declineTransaction">Your balance is not sufficient to transfer the requested amount of coins</li>
+                                                    <li ng-if="declineTransaction">You cannot transfer 0 coins or less</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">סגור</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END section -->
+
+
+    <section class="pb_section bg-light pb_slant-white" id="lastTransactions">
+        <div class="container" ng-controller="pendingTransactionsController" style="padding-bottom: 200px; padding-top: 100px;">
+            <div class="row justify-content-center mb-2">
+                <div class="col-md-6 text-center mb-2">
+                    <h2>Recent transactions made</h2>
+                    <h5 class="text-uppercase pb_font-15 mb-2 pb_color-dark-opacity-3 pb_letter-spacing-2"><strong>Here you can see recent transactions made <span style="font-weight: bold">Waiting for mining</span></strong></h5>
+                </div>
+            </div>
+
+            <div class="row">
+                <small style="color: red;">*Note - Mining cannot be performed when the table is empty / contains only one transfer from system-reward!</small>
+                <table id="lastTransactionsTable" class="table table-hover table-bordered" style="overflow: auto">
+                    <thead class="text-right" style="background-image: -webkit-gradient(linear, left bottom, right top, from(#6777ed), to(#81cbec)); background-attachment:fixed; color: #fff">
+                        <tr class="text-right">
+                            <th class="text-right">Transaction ID</th>
+                            <th class="text-right">sender</th>
+                            <th class="text-right">addressee</th>
+                            <th class="text-right">sum</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody" style="background: #fff"></tbody>
+                </table>
+            </div>
+            <script>
+                $(document).ready(function () {
+                    $('[data-toggle="tooltip"]').tooltip();
+                });
+            </script>
+            <div ng-controller="miningController">
+                <div class="row">
+                    <p class="col-10"><small>*The table is updated in real time!</small></p>
+                    <div class="col-2" data-toggle="tooltip" title="By clicking this button you can enable all transactions awaiting approval">
+                        <button id="mineButton" class="button1" style="vertical-align:middle" ng-click="mine()"><span>Perform mining</span></button>
+                    </div>
+                </div>
+                <p class="alert alert-light no-data-text" style="outline: 2px dotted #639ce4" ng-if="mineSuccesss">
+                    <span style="font-weight: bold;">The mining was carried out successfully!</span> Now the deals are complete and the currencies have been updated in the digital wallets.
+                </p>
+            </div>
+        </div>
+
+    </section>
+    <!-- ENDs ection -->
+    <section class="pb_section overflow-hidden pb_slant-white" id="about">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-6 text-center mb-5">
+                    <h2>On the project, on me, and on the blockchain</h2>
+                    <h5 class="text-uppercase pb_font-15 mb-2 pb_color-dark-opacity-3 pb_letter-spacing-2"><strong>A little about me, a lot about the project and the blockchain</strong></h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div id="pb_faq" class="pb_accordion" data-children=".item">
+                        <div class="item">
+                            <a data-toggle="collapse" data-parent="#pb_faq" href="#pb_faq1" aria-expanded="false" aria-controls="pb_faq1" class="pb_font-22 py-4">&nbsp;&nbsp;&nbsp;What is the blockchain?</a>
+                            <div id="pb_faq1" class="collapse" role="tabpanel">
+                                <div class="py-3">
+                                    <p>
+                                        The main idea behind the technology is to create a system that enables online business activity without the need for the supervision of a central management entity. For example, transferring funds between colleagues without the need for supervision or management by an outside party. To date the banks have served as supervisors of all the money transfers and are the ones who guaranteed the value of the physical currencies and banknotes. In P2P (peer-to-peer) platforms, there is no external body that oversees business activity and technology replaces the role of banks.
+                                    </p>
+                                    <p>
+                                        This is actually the foundation behind blockchain technology. Using this technology, digital registration is stored on the computers of all network users without revealing their identities. The digital registration includes information about the users' accounts and the registration of money transfers made from the accounts, where the information is accessible, transparent and available to any other user, while strictly maintaining the identity of the users and their privacy.
+                                    </p>
+                                    <p>
+                                        The information is encrypted at the highest level and stored in a block that joins the existing blockchain. Each block is mathematically related to the block in front of it so that existing information stored in the blocks cannot be changed. This reduces fraud and significantly minimizes the risk of various scams. It is worth noting that each block is locked within a given period of time, while in Bitcoin the operation takes about ten minutes. After locking the information and attaching the block to the block chain, the system produces a unique digital signature that originates from the previous block. Therefore, the technology is considered safe and any user who tries to change a particular detail in the information stored in one of the previous blocks will get a different result and its operation will be rejected.
+                                    </p>
+                                    <p>
+                                        It is important to emphasize that the information on all transactions is stored chronologically in blockchain technology. Once a block is digitally locked it joins the block chain, so the system is considered secure and reliable, and it is almost impossible to forge or change information in the blocks.
+                                    </p>
+                                    <p>
+                                        Using the technology, all users have access to the data, but do not have the ability to control the stored information. Thus, third-party supervision of the transfer of virtual currencies between digital wallets can be waived - saving fees, shortening time and streamlining the method for the benefit of the general public. This is exactly why banks and other financial institutions are afraid of technology, and only recently have they begun to explore how blockchain systems can help them.
+                                    </p>
+                                    <p class="text-left">
+                                        <em>
+                                            Taken from the Crypto Jungle website, for further reading:
+                                            <a href="https://www.cryptojungle.co.il/blog/134">Click here</a>
+                                        </em>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <a data-toggle="collapse" data-parent="#pb_faq" href="#pb_faq2" aria-expanded="false" aria-controls="pb_faq2" class="pb_font-22 py-4">&nbsp;&nbsp;&nbsp;A little about me and the project</a>
+                            <div id="pb_faq2" class="collapse" role="tabpanel">
+                                <div class="py-3">
+                                    <p>Moore Cohen, 27, a software engineering student.</p>
+                                    <p>Recently the issue of blockchain has gained incredible momentum. More and more he is getting into conversation topics about the benefits he gives and companies that have managed to take it one step further.</p>
+                                    <p>Of course, the rumors also reached my ears and for a very long time I wanted to research the subject and know how to deal with the technology in question. Also, I always want and get excited to learn new things so I decided not to play on my home turf and take my Javascript skills one step further as well. </p>
+                                    <p>
+                                        So I started learning how nodeJS works and in addition also frameworks like express and new tools like PostMan, chartJS, Angular to create Api's and more ..
+                                        <br />
+                                        This is how it progressed and in a short time I built a prototype for the blockchain system using the tools I purchased.
+                                    </p>
+                                    <p class="text-left">
+                                        <em>
+                                            My portfolio:
+                                            <a href="http://morc.co.il/">Click here</a>
+                                        </em>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <a data-toggle="collapse" data-parent="#pb_faq" href="#pb_faq3" aria-expanded="false" aria-controls="pb_faq3" class="pb_font-22 py-4">&nbsp;&nbsp;&nbsp;Blockchain - Chain of blocks</a>
+                            <div id="pb_faq3" class="collapse" role="tabpanel">
+                                <div class="py-3">
+                                    <p>
+                                        The Blockchain as it is called, is a "blockchain".
+                                        Each block can contain a certain amount of information, in general a block will contain the following information:
+                                        <ul>
+                                            <li>
+                                                <mark>Block Index</mark>: Current block number.
+                                            </li>
+                                            <li>
+                                                <mark>Hash</mark>: Summaries (SHA-256) The information that makes up the block ie all the transactions that make up the block will be summed up to one output, the above output. Updated automatically according to the total calculation power in the currency network in all 2016 blocks (in the Bitcoin network).
+                                            </li>
+                                            <li>
+                                                <mark>Previous block</mark>: Summary (SHA-256) The information of the previous block. Each block must contain the summary of the block made before it. This is the way to create a timestamp and maintain a chronological order that cannot be changed. This connection is called the block chain.
+                                            </li>
+                                            <li>
+                                                <mark>Time</mark>:Time stamp creation block.
+                                            </li>
+                                            <li>
+                                                <mark>Transactions</mark>:All transactions awaiting proof of employment.
+                                            </li>
+                                            <li>
+                                                <mark>Total Coins</mark>: Total all the coins transferred in the transactions that make up the block.
+                                            </li>
+                                            <li>
+                                                <mark>Size</mark>: Block size / weight in kilobytes.
+                                            </li>
+                                            <li>
+                                                <mark>Nonce</mark>: A unique number (32-bit) created by the miner to crack the block. Cracking is actually an abstract creation that starts with a bunch of zeros and matches the block abstract. The current Nonce number represents an unknown number of attempts to reach the required match which is the correct Nonce. That is, cracking the block.
+                                            </li>
+                                            <li>
+                                                <mark>NetworkNodes</mark>: A map that includes the other computers on the network.
+                                            </li>
+                                        </ul>
+                                    </p>
+                                    <p class="text-left">
+                                        <em>
+                                            For a deeper reading:
+                                            <a href="https://dev.to/damcosset/blockchain-what-is-in-a-block-48jo">Click here</a>
+                                        </em>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <a data-toggle="collapse" data-parent="#pb_faq" href="#pb_faq4" aria-expanded="false" aria-controls="pb_faq4" class="pb_font-22 py-4">&nbsp;&nbsp;&nbsp;Private key and public key- privateKey & publicKey</a>
+                            <div id="pb_faq4" class="collapse" role="tabpanel">
+                                <div class="py-3">
+                                    <p>
+                                        <mark>The private key</mark> Is a unique type of string / number given to a user when registering for the blockchain network.
+                                        <br />
+                                        At the same time, there is a public key similar to the private key - this key is derived from the private key using some sorting function that uses an encryption protocol such as sha256 / RSA.
+                                        <br />
+                                        What is special about these keys is that the public key can be decrypted with the private key - but it is almost impossible to decipher the private key with the public key. That is, the process is one-way.
+
+                                    </p>
+                                    <p>
+                                        <mark>The public key</mark> Is the "ID" of the user in the blockchain network.
+                                        <br />
+                                        It is visible to all other users on the network, so when a particular user wants to transfer digital coins to your digital wallet he will have to identify you through it.
+                                        <br />
+                                        <mark>Purpose of the private key</mark> It performs operations on your account, such as transferring digital coins from your private wallet to another user's wallet.
+                                        In order to make such a transfer, the system will need to verify that the sender enters his private and public key into the system, the system performs decryption using the encryption function, and after it sees that the public key does match the private key, the transfer will be possible provided enough coins are sent.
+                                    </p>
+                                    <p>
+                                        <h5 style="color: red">Warning - Do not share your private key with anyone, this key is confidential!</h5>
+                                        <span style="color: red">If this key gets into the wrong hands - the same person will be able to steal virtual coins for you!</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="pb_footer bg-light" role="contentinfo">
+        <div class="container">
+
+            <div class="row">
+                <div class="col text-center">
+                    <div class="col">
+                        <ul class="list-inline" style="padding-left: 50px;">
+                            <li class="list-inline-item"><a href="#" class="p-2"><i class="fab fa-facebook-f"></i></a></li>
+                            <li class="list-inline-item"><a href="#" class="p-2"><i class="fab fa-github"></i></a></li>
+                            <li class="list-inline-item"><a href="#" class="p-2"><i class="fab fa-linkedin-in"></i></a></li>
+                        </ul>
+                    </div>
+                    <p class="pb_font-14">
+                        <a href="index.html">JewCOIN</a>
+                        <br>
+                        Software and designed by Mor Cohen -<a href="http://morc.co.il/">Portfolio</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- loader -->
+    <div id="pb_loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#1d82ff" /><div style="position: fixed; z-index: 100000; top:39%; right: 44%;"><img src="./assets/css/logo_blockchain_scrolled - Copy - Copy.png"><img /></div></svg></div>
+
+    <script src="./assets/js/jquery.min.js"></script>
+
+    <script src="./assets/js/popper.min.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/slick.min.js"></script>
+    <script src="./assets/js/jquery.waypoints.min.js"></script>
+    <script src="./assets/js/jquery.easing.1.3.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script>
+        window.app = angular.module('BlockExplorer', []);
+        app.controller('searchInBlockchainController', function ($scope, $http) {
+
+            $scope.block = null;
+            $scope.transaction = null;
+            $scope.addressData = null;
+            $scope.initialSearchMade = false;
+
+            $scope.fetchBlock = function (blockHash) {
+                $http.get(`/block/${blockHash}`)
+                    .then(response => {
+                        $scope.block = response.data.block;
+                        $scope.transaction = null;
+                        $scope.addressData = null;
+                    });
+            };
+
+            $scope.fetchTransaction = function (transactionId) {
+                $http.get(`/transaction/${transactionId}`)
+                    .then(response => {
+                        $scope.transaction = response.data.transaction;
+                        $scope.block = null;
+                        $scope.addressData = null;
+                    });
+            };
+
+            $scope.fetchAddressData = function (address) {
+                $http.get(`/address/${address}`)
+                    .then(response => {
+                        $scope.addressData = response.data.addressData;
+                        if (!$scope.addressData.addressTransactions.length) $scope
+                            .addressData = null;
+                        $scope.block = null;
+                        $scope.transaction = null;
+                    });
+            };
+            $scope.search = function (searchValue) {
+                $scope.initialSearchMade = true;
+                if ($scope.searchType === 'block') {
+                    $scope.fetchBlock(searchValue);
+                }
+                else if ($scope.searchType === 'transaction') {
+                    $scope.fetchTransaction(searchValue);
+                }
+                else if ($scope.searchType === 'address') {
+                    $scope.fetchAddressData(searchValue);
+                }
+            };
+        });
+
+        ////////////////////////////////////////////////////////////////////
+        app.controller('walletController', function ($scope, $http) {
+            $scope.addressData = null;
+            $scope.initialSearchMade = false;
+            $scope.dis = false;
+
+            $scope.fetchAddressData = function (address) {
+                $http.get(`/address/${address}`)
+                    .then(response => {
+                        $scope.addressData = response.data.addressData;
+                        if ($scope.addressData) {
+                            $scope.dis = !$scope.dis;//disable button
+                        }
+                        if (!$scope.addressData.addressTransactions.length) $scope
+                            .addressData = null;
+                        $scope.block = null;
+                        $scope.transaction = null;
+                    });
+            };
+            $scope.search = function (searchValue) {
+                $scope.initialSearchMade = true;
+                $scope.fetchAddressData(searchValue);
+            };
+
+
+        });
+
+        ///////////////////////////////////////////////////////////////////
+        app.controller('transactionController', function ($scope, $http) {
+
+            $scope.acceptedTransaction = null;
+            $scope.declineTransaction = null;
+
+            $scope.transactionCoins = function (amountToTransfer, privKey, pubKey, pubKeyOfRecipient) {
+
+                $http({
+                    url: '/transaction/broadcast',
+                    method: "POST",
+                    data: {
+                        "amount": amountToTransfer,
+                        "sender": pubKey,
+                        "recipient": pubKeyOfRecipient,
+                        "privKey": privKey
+                    }
+                })
+                    .then(function (response) {
+                        //console.log("success");
+                        $('#mineButton').attr("disabled", false);
+                        $scope.acceptedTransaction = true;
+                        $scope.declineTransaction = false;
+                        //console.log(response.data.note);
+                        if (response.data.note === false) {
+                            $scope.acceptedTransaction = false;
+                            $scope.declineTransaction = true;
+                            console.log(response.data.note);
+                        }
+                        //console.log($scope.acceptedTransaction);
+                    },
+                        function (response) {
+                            $scope.acceptedTransaction = false;
+                            $scope.declineTransaction = true;
+                            //console.log("failed");
+                        });
+            }
+
+        });
+
+        ///////////////////////////////////////////////////////////////////
+        app.controller('pendingTransactionsController', function ($scope, $http) {
+
+            $scope.init = function () {
+                $http.get('/pendingTransactions')
+                    .then(response => {
+                        $scope.pendingTransactions = response.data.pendingTransactions;
+                    });
+            };
+
+            $scope.init();
+
+        });
+
+        ///////////////////////////////////////////////////////////////////
+        app.controller('miningController', function ($scope, $http, $timeout) {
+
+            $scope.mineSuccesss = null;
+
+            $scope.mine = function () {
+                var key1 = prompt("To activate the function Enter your private key:", "");
+                var key2 = prompt("To activate the function Enter your public key:", "");
+                $http({
+                    url: '/hashKeys',
+                    method: "POST",
+                    data: {
+                        "key1": key1,
+                        "key2": key2
+                    }
+                })
+                    .then(function (response) {
+                        if (response.data.note === false) {
+                            alert("Incompatible keys");
+                        }
+                        else {
+                            $http.get('/mine')
+                                .then(response => {//mining sccess
+                                    $("#lastTransactionsTable td").remove();
+                                    $.get('/emitMiningSuccess', (data, status) => {//http request via JQuery
+                                        console.log(data);
+                                    });
+                                    $scope.mineSuccesss = true;
+                                    $timeout(function () {//remove 'mining success' message
+                                        $scope.mineSuccesss = false;
+                                    }, 4000);
+                                    $timeout(function () {
+                                        location.reload();
+                                    }, 5000);
+                                });
+                        }
+                    },
+                        function (response) {
+                        });
+
+            };
+
+        });
+
+
+        ///////////////////////////////////////////////////////////////////
+        app.controller('inviteController', function ($scope, $http) {
+
+            $scope.checkeys = function (email) {
+                var key1 = prompt("To activate the function Enter your private key:", "");
+                var key2 = prompt("To activate the function Enter your public key:", "");
+
+                
+                $http({
+                    url: '/hashKeys',
+                    method: "POST",
+                    data: {
+                        "key1": key1,
+                        "key2": key2
+                    }
+                })
+                    .then(function (response) {
+                        if (response.data.note === false) {
+                            alert("Incompatible keys");
+                        }
+                        else {
+                            $http({
+                                url: '/sendInvitation',
+                                method: "POST",
+                                data: {
+                                    email: email,
+                                    sender: key2
+                                }
+                            })
+                                .then(function (response) {
+                                    if (response.data.note === true) {
+                                        alert(`Invitation sent successfully \n The amount of orders left in your possession: ${response.data.numOfInv}`);
+                                    }
+                                    else if (response.data.note === false) {
+                                        alert('You do not have any orders');
+                                    }
+                                    else if (response.data.note === 'not valid email') {
+                                        alert('Please enter a valid email address!');
+                                    }
+                                });
+                        }
+                    });
+
+            };
+
+        });
+
+    </script>
+    
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="sockets.js"></script>
+</body>
+</html>
