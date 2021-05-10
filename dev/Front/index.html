@@ -179,7 +179,7 @@
     <section class="pb_cover_v3 overflow-hidden cover-bg-indigo cover-bg-opacity text-right pb_gradient_v3 pb_slant-light" id="section-home">
         <div class="container" ng-controller="searchInBlockchainController">
             <div class="row align-items-center justify-content-center">
-                <div class="col-md-6">
+                <div class="col-md-6" style="text-align: left;">
                     <h2 class="heading">Block Explorer</h2>
                     <h2 style="color: white;">Blockchain search</h2>
                     <div class="sub-heading">
@@ -290,7 +290,7 @@
                                             <!-- 'display address' table -->
                                             <h3 class="table-title" ng-if="addressData">Search using a public key</h3>
                                             <p ng-if="addressData">Displays all transactions made by the user: <small style="color: #1d82ff">{{searchValue}}</small></p>
-                                            <p id="balance-text" ng-if="addressData"><mark>Current balance: {{ addressData.addressBalance }}JCN</mark></p>
+                                            <p id="balance-text" ng-if="addressData"><mark>Current balance: {{ addressData.addressBalance }}DCN</mark></p>
                                             <table class="table table-striped text-right" ng-if="addressData">
                                                 <thead class="text-right">
                                                     <tr>
@@ -354,7 +354,7 @@
 
                                 <h3 class="table-title" ng-if="addressData">Details of transactions</h3>
                                 <p ng-if="addressData">Displays all transactions made by the user: <small style="color: #1d82ff">{{searchValue}}</small></p>
-                                <p id="balance-text" ng-if="addressData"><mark>Remaining amount:{{ addressData.addressBalance }} <small>JCN</small></mark></p>
+                                <p id="balance-text" ng-if="addressData"><mark>Remaining amount:{{ addressData.addressBalance }} <small>DCN</small></mark></p>
                                 <table class="table table-striped text-right" ng-if="addressData" style="display: inline; overflow: auto">
                                     <thead class="text-right">
                                         <tr>
@@ -469,7 +469,7 @@
                     <div class="row">
                         <div class="col">
                             <h2>Submit D-Coin's</h2>
-                            <p class="pb_font-20">Transfer virtual currency (JCN) to another account</p>
+                            <p class="pb_font-20">Transfer virtual currency (DCN) to another account</p>
                         </div>
                     </div>
 
@@ -479,7 +479,7 @@
 
                                 <div class="media pb_feature-v2 text-right mb-1 mt-5">
                                     <i class="fas fa-dollar-sign fa-1x"></i>
-                                    <div class="media-body">
+                                    <div class="media-body" style="text-align: left;">
                                         <h3 class="mt-2 mb-2 heading">Amount to be sent</h3>
                                         <input type="text" name="amountToTransfer" class="form-control text-sans-serif" placeholder="For example: 50" ng-model="amountToTransfer" required>
 
@@ -489,7 +489,7 @@
                                 <div class="media pb_feature-v2 text-right mb-1 mt-5">
                                     <i class="fas fa-user-plus"></i>
                                     <div class="media-body">
-                                        <h3 class="mt-2 mb-2 heading">The sender</h3>
+                                        <h3 class="mt-2 mb-2 heading" style="text-align: left;">The sender</h3>
                                         <input type="text" class="form-control text-sans-serif" placeholder="Enter your public key" name="pubKey" ng-model="pubKey" required>
                                     </div>
                                 </div>
@@ -500,14 +500,14 @@
                                 <div class="media pb_feature-v2 text-right mb-1 mt-5">
                                     <i class="fas fa-key fa-1x"></i>
                                     <div class="media-body">
-                                        <h3 class="mt-2 mb-2 heading">privateKey</h3>
+                                        <h3 class="mt-2 mb-2 heading" style="text-align: left;">privateKey</h3>
                                         <input type="text" class="form-control text-sans-serif" placeholder="Enter your secret key" name="privKey" ng-model="privKey" required>
                                     </div>
                                 </div>
                                 <div class="media pb_feature-v2 text-right mb-1 mt-5">
                                     <i class="fas fa-user-check"></i>
                                     <div class="media-body">
-                                        <h3 class="mt-2 mb-2 heading">The recipient</h3>
+                                        <h3 class="mt-2 mb-2 heading" style="text-align: left;">The recipient</h3>
                                         <input type="text" class="form-control text-sans-serif" placeholder="Enter the recipient's public key" name="pubKeyOfRecipient" ng-model="pubKeyOfRecipient" required>
                                     </div>
                                 </div>
@@ -750,7 +750,7 @@
                             </div>
                         </div>
                         <div class="item">
-                            <a data-toggle="collapse" data-parent="#pb_faq" href="#pb_faq4" aria-expanded="false" aria-controls="pb_faq4" class="pb_font-22 py-4">&nbsp;&nbsp;&nbsp;Private key and public key- privateKey & publicKey</a>
+                            <a data-toggle="collapse" data-parent="#pb_faq" href="#pb_faq4" aria-expanded="false" aria-controls="pb_faq4" class="pb_font-22 py-4">&nbsp;&nbsp;&nbsp;Private key and public key</a>
                             <div id="pb_faq4" class="collapse" role="tabpanel">
                                 <div class="py-3">
                                     <p>
