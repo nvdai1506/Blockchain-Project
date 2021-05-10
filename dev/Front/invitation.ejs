@@ -55,11 +55,11 @@
                         <p><small><mark>Copy and keep the keys in a safe place (key cannot be recovered and can only be given once!) </mark></small></p>
                         <p> This is your private key </p>
                         <div class="form-group">
-                            <input type="text" class="form-control pb_height-50 reverse" placeholder="<%= privateKey %>" disabled>
+                            <input type="text" class="form-control pb_height-50 reverse" placeholder="<%= privateKey %>" >
                         </div>
                         <p> This is your public key </p>
                         <div class="form-group">
-                            <input type="text" class="form-control pb_height-50 reverse" placeholder="<%= publicKey %>" disabled>
+                            <input type="text" class="form-control pb_height-50 reverse" placeholder="<%= publicKey %>" >
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary btn-lg btn-block pb_btn-pill btn-shadow-strong" value="Click to confirm registration in the system" ng-click="confirmInvitation(<%= JSON.stringify(publicKey) %>, <%= JSON.stringify(invitationID) %>, <%= JSON.stringify(senderID) %>)">
