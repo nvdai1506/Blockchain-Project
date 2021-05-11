@@ -31,10 +31,12 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";//fixing nodemailer
 /*  -Initialize blockchain first time & create a master user-  */
 ///////////////////////////////////////////////////////////////////////////////////////////////
 const backup = new Blockchain();
-const privateKey = uuid().split('-').join(''); //privateKey
-console.log("privateKey: ", privateKey)
-const public_key = sha256(privateKey); //publicKey
-console.log("public_key: ", public_key)
+// const privateKey = uuid().split('-').join(''); //privateKey
+// console.log("privateKey: ", privateKey)
+// const public_key = sha256(privateKey); //publicKey
+// console.log("public_key: ", public_key)
+const privateKey = 'b21859a0b1fb11eb8e79d15bfd85b131';
+const public_key = '3b87a882b6a9d89e50ecfaa500d46730e082e92caefd7bf7b895d69b2137cfe7';
 const master = backup.createNewTransaction(1000000, "system-reward", public_key);
 backup.chain[0].transactions.push(master);
 
