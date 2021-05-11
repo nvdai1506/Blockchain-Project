@@ -31,23 +31,13 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";//fixing nodemailer
 /*  -Initialize blockchain first time & create a master user-  */
 ///////////////////////////////////////////////////////////////////////////////////////////////
 const backup = new Blockchain();
+
 // const privateKey = uuid().split('-').join(''); //privateKey
 // console.log("privateKey: ", privateKey)
 // const public_key = sha256(privateKey); //publicKey
 // console.log("public_key: ", public_key)
 const privateKey = 'b21859a0b1fb11eb8e79d15bfd85b131';
 const public_key = '3b87a882b6a9d89e50ecfaa500d46730e082e92caefd7bf7b895d69b2137cfe7';
-const master = backup.createNewTransaction(1000000, "system-reward", public_key);
-backup.chain[0].transactions.push(master);
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-/*  -Alert: the file 'masterKeysForDelete.txt' content need to be deleted after first init-  */
-fs.appendFileSync('masterKeysForDelete.txt', '\nprivateKey: ' + privateKey);
-fs.appendFileSync('masterKeysForDelete.txt', '\npublicKey: ' + public_key);
-/*  -Alert: the file 'masterKeysForDelete.txt' content need to be deleted after first init-  */
-///////////////////////////////////////////////////////////////////////////////////////////////
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /*  -Create a database named "invitationsDB" on first time-  */
@@ -60,8 +50,21 @@ MongoClient.connect(url, function (err, db) {
     dbo.collection("users").find().toArray(function (err, result) {//check if user collection already exist
         if (err) throw err;
         if (result.length !== 0)
+        {
+            const master = backup.createNewTransaction(result[0].inv, "system-reward", result[0].key);
+            backup.chain[0].transactions.push(master);
             console.log('Collection already exist');
+        }
         else {
+            
+            const master = backup.createNewTransaction(1000000, "system-reward", public_key);
+            backup.chain[0].transactions.push(master);
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            /*  -Alert: the file 'masterKeysForDelete.txt' content need to be deleted after first init-  */
+            fs.appendFileSync('masterKeysForDelete.txt', '\nprivateKey: ' + privateKey);
+            fs.appendFileSync('masterKeysForDelete.txt', '\npublicKey: ' + public_key);
+            /*  -Alert: the file 'masterKeysForDelete.txt' content need to be deleted after first init-  */
+            ///////////////////////////////////////////////////////////////////////////////////////////////
             console.log("Database created!");
             dbo.createCollection("users", function (err, res) {
                 if (err) throw err;
@@ -123,6 +126,9 @@ io.on('connection', (socket) => {
     /*  -On connection of socket-  */
     nodes.push(new Blockchain(socket.id));
     socket.emit('PT', backup.pendingTransactions);//emit to that specific socket
+    console.log("io.on(connection), backup.getAllTransactions" );
+    console.log(backup.getAllTransactions());
+    socket.emit('Hist',backup.getAllTransactions());
     console.log('New user connected');
     console.log(socket.id);
 
@@ -185,9 +191,12 @@ io.on('connection', (socket) => {
     * Description: user mine the last block of transaction by POW, getting reward and init a new block
     */
     app.get('/mine', (req, res) => {
+        // var publickey = req.params.publickey;
         const lastBlock = backup.getLastBlock();
         const previousBlockHash = lastBlock['hash'];
-
+        AllTransactions = backup.getAllTransactions();
+        io.clients().emit('Hist', AllTransactions);
+        console.log("--mine: backup.pendingTransactions: ",AllTransactions);
         const currentBlockData = {
             transactions: backup.pendingTransactions,
             index: lastBlock['index'] + 1
@@ -268,11 +277,20 @@ io.on('connection', (socket) => {
     */
     app.get('/pendingTransactions', (req, res) => {
         const transactionsData = backup.getPendingTransactions();
+        console.log("--/pendingTransactions: ");
+        console.log(transactionsData);
         res.json({
             pendingTransactions: transactionsData
         });
     });
-
+    app.get('/histTransactions', (req, res) => {
+        const transactionsData = backup.getAllTransactions();
+        console.log("--/histTransactions: ");
+        console.log(transactionsData);
+        res.json({
+            histTransactions: transactionsData
+        });
+    });
 
     /*
     * Title: Main Blockchain
@@ -455,7 +473,7 @@ io.on('connection', (socket) => {
     * Description: enabled when user logs off
     */
     socket.on('disconnect', () => {
-        console.log(`User: ${socket.id} was disconnected`)
+        console.log(`User: ${socket.id} was disconnected`);
         nodes.splice(search((socket.id).toString(), nodes), 1);
     });
 

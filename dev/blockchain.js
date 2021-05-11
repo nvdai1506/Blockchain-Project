@@ -127,7 +127,17 @@ Blockchain.prototype.getTransaction = function (transactionId) {
         block: correctBlock
     };
 };
+Blockchain.prototype.getAllTransactions = function(){
+    let transactions = [];
 
+    this.chain.forEach(block => {
+        block.transactions.forEach(transaction => {
+            console.log(transaction);
+            transactions.push(transaction);
+        });
+    });
+    return transactions;
+}
 Blockchain.prototype.getPendingTransactions = function () {
     return this.pendingTransactions;
 };

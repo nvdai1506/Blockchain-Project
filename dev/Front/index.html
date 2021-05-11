@@ -288,15 +288,15 @@
                                             </table>
                                             <!-- end 'display transaction' table -->
                                             <!-- 'display address' table -->
-                                            <h3 class="table-title" ng-if="addressData">Search using a public key</h3>
-                                            <p ng-if="addressData">Displays all transactions made by the user: <small style="color: #1d82ff">{{searchValue}}</small></p>
-                                            <p id="balance-text" ng-if="addressData"><mark>Current balance: {{ addressData.addressBalance }}DCN</mark></p>
-                                            <table class="table table-striped text-right" ng-if="addressData">
-                                                <thead class="text-right">
+                                            <h3 class="table-title" ng-if="addressData" style="text-align: left;">Search using a public key</h3>
+                                            <p ng-if="addressData" style="text-align: left;">Displays all transactions made by the user: <small style="color: #1d82ff">{{searchValue}}</small></p>
+                                            <p id="balance-text" ng-if="addressData" style="text-align: left;"><mark>Current balance: {{ addressData.addressBalance }}DCN</mark></p>
+                                            <table class="table table-striped text-left" ng-if="addressData" style="font-size: 8px;">
+                                                <thead class="text-left">
                                                     <tr>
-                                                        <th scope="col" class="text-right">sender:</th>
-                                                        <th scope="col" class="text-right">addressee:</th>
-                                                        <th scope="col" class="text-right">Amount of coins:</th>
+                                                        <th scope="col" class="text-left">sender:</th>
+                                                        <th scope="col" class="text-left">addressee:</th>
+                                                        <th scope="col" class="text-left">Amount:</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -569,6 +569,10 @@
                                                             <td class="bold">Amount of coins:</td>
                                                             <td>{{ amountToTransfer }}</td>
                                                         </tr>
+                                                        <tr>
+                                                            <td class="bold">Fee (1%):</td>
+                                                            <td>{{ amountToTransfer*0.01}}</td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                                 <!-- end 'display transaction' table -->
@@ -643,6 +647,34 @@
 
     </section>
     <!-- ENDs ection -->
+    <section class="pb_section bg-light pb_slant-white" id="HistTransactions">
+        <div class="container" ng-controller="histController"  style="padding-bottom: 200px; padding-top: 100px;">
+            <div class="row justify-content-center mb-2">
+                <div class="col-md-6 text-center mb-2">
+                    <h2>History Transactions</h2>
+                    <h5 class="text-uppercase pb_font-15 mb-2 pb_color-dark-opacity-3 pb_letter-spacing-2"><strong>Here you can see complete transactions</strong></h5>
+                </div>
+            </div>
+
+            <div class="row">
+                <table id="HistTransactionsTable" class="table table-hover table-bordered" style="overflow: auto">
+                    <thead class="text-left" style="background-image: -webkit-gradient(linear, left bottom, right top, from(#6777ed), to(#81cbec)); background-attachment:fixed; color: #fff">
+                        <tr class="text-left">
+                            <th class="text-left">Transaction ID</th>
+                            <th class="text-left">sender</th>
+                            <th class="text-left">addressee</th>
+                            <th class="text-left">sum</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody" style="background: #fff"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+
+     <!-- ENDs ection -->
+
     <section class="pb_section overflow-hidden pb_slant-white" id="about">
         <div class="container">
             <div class="row justify-content-center mb-5">
@@ -896,12 +928,13 @@
 
         ///////////////////////////////////////////////////////////////////
         app.controller('transactionController', function ($scope, $http) {
-
+            console.log("--transactionController");
             $scope.acceptedTransaction = null;
             $scope.declineTransaction = null;
 
             $scope.transactionCoins = function (amountToTransfer, privKey, pubKey, pubKeyOfRecipient) {
-
+                console.log("--transactionCoins");
+                amountToTransfer = parseInt(amountToTransfer)+amountToTransfer*0.01
                 $http({
                     url: '/transaction/broadcast',
                     method: "POST",
@@ -917,7 +950,7 @@
                         $('#mineButton').attr("disabled", false);
                         $scope.acceptedTransaction = true;
                         $scope.declineTransaction = false;
-                        //console.log(response.data.note);
+                        console.log(response.data);
                         if (response.data.note === false) {
                             $scope.acceptedTransaction = false;
                             $scope.declineTransaction = true;
@@ -936,7 +969,7 @@
 
         ///////////////////////////////////////////////////////////////////
         app.controller('pendingTransactionsController', function ($scope, $http) {
-
+            console.log("--pendingTransactionsController");
             $scope.init = function () {
                 $http.get('/pendingTransactions')
                     .then(response => {
@@ -947,13 +980,28 @@
             $scope.init();
 
         });
+        ///////////////////////////////////////////////////////////////////
+        app.controller('histController', function ($scope, $http) {
+            console.log("--histController");
+            $scope.init = function () {
+                $http.get('/histTransactions')
+                    .then(response => {
+                        console.log("---histTransactionsdata:");
+                        console.log(response.data.histTransactions);
+                        $scope.histTransactions = response.data.histTransactions;
+                    });
+            };
+
+            $scope.init();
+
+        });
 
         ///////////////////////////////////////////////////////////////////
         app.controller('miningController', function ($scope, $http, $timeout) {
-
+            console.log("--miningController");
             $scope.mineSuccesss = null;
-            console.log("miningController")
             $scope.mine = function () {
+                console.log("-- $scope.mine = function");
                 var key1 = prompt("To activate the function Enter your private key:", "");
                 var key2 = prompt("To activate the function Enter your public key:", "");
                 $http({
@@ -969,13 +1017,13 @@
                             alert("Incompatible keys");
                         }
                         else {
-                            console.log("ok")
+                            console.log("ok");
                             $http.get('/mine')
                                 .then(response => {//mining sccess
-                                    console.log(response)
+                                    console.log("--http.get('/mine')");
                                     $("#lastTransactionsTable td").remove();
                                     $.get('/emitMiningSuccess', (data, status) => {//http request via JQuery
-                                        console.log("emitMiningSuccess")
+                                        console.log("--emitMiningSuccess");
                                         console.log(data);
                                     });
                                     $scope.mineSuccesss = true;
@@ -989,6 +1037,7 @@
                         }
                     },
                         function (response) {
+
                         });
 
             };
@@ -1026,7 +1075,7 @@
                                 }
                             })
                                 .then(function (response) {
-                                    console.log(response.data)
+                                    console.log(response.data);
                                     if (response.data.note === true) {
                                         alert(`Invitation sent successfully \n The amount of orders left in your possession: ${response.data.numOfInv}`);
                                     }

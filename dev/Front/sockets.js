@@ -65,9 +65,33 @@ socket.on('newMessage', (message) => {
     var s = $("#chat > li:last-child").position();
     $("div").scrollTop(s.top);
 });
-
+socket.on('Hist',(ht)=>{
+    console.log("--socket.on(Hist)");
+    console.log("---", ht.length);
+    var rows = document.getElementById("HistTransactions").getElementsByTagName("tr").length;
+    for (let i = 0; i < ht.length; i++) {//i used JQuery to display the table
+        if(ht[i].sender !== "system-reward"){
+            ht[i].amount = ht[i].amount/(1.01);
+        }
+        if (objForDupCheck !== null)
+            if (ht[i].transactionId === objForDupCheck.transactionId)
+                continue;
+        $('#HistTransactionsTable > tbody:last-child').append('<tr>' +
+            '<td style="font-size:x-small; max-width: 100px;">' +
+            ht[i].transactionId + '</td>' +
+            '<td style="font-size:x-small; max-width: 220px;">' +
+            ht[i].sender + '</td>' +
+            '<td style="font-size:x-small; max-width: 220px;">' +
+            ht[i].recipient + '</td>' +
+            '<td>' +
+            ht[i].amount + '</td>' +
+            '</tr >');
+        objForDupCheck = ht[i];
+    }
+});
 socket.on('PT', (pt) => {
-
+    console.log("--socket.on(PT)");
+    console.log("---:", pt.length);
     var rows = document.getElementById("lastTransactionsTable").getElementsByTagName("tr").length;
     var row = document.getElementById("mineButton");
 
@@ -77,6 +101,9 @@ socket.on('PT', (pt) => {
 
 
     for (let i = 0; i < pt.length; i++) {//i used JQuery to display the table
+        if(pt[i].sender !== "system-reward"){
+            pt[i].amount = pt[i].amount/(1.01);   
+        }
         if (objForDupCheck !== null)
             if (pt[i].transactionId === objForDupCheck.transactionId)
                 continue;
@@ -112,12 +139,13 @@ socket.on('PT', (pt) => {
 
 });
 socket.on('mineSuccess', (trueOrFalse) => {//after mining success - display a meassage to all users
+    console.log("--socket.on(mineSuccess)");
     function removePopUp() {
-        console.log("removePopUp")
+        console.log("removePopUp");
         $("#alert").remove();
     }
     if (trueOrFalse === true) {//i could use JQuery
-        console.log("mineSuccess: true")
+        console.log("mineSuccess: true");
         var alert = document.createElement("div");
         alert.setAttribute("class", "alert alert-success");
         alert.setAttribute("id", "alert");
@@ -127,3 +155,4 @@ socket.on('mineSuccess', (trueOrFalse) => {//after mining success - display a me
         setTimeout(removePopUp, 5000);
     }
 });
+
