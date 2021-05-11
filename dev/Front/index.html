@@ -1026,6 +1026,7 @@
                                 }
                             })
                                 .then(function (response) {
+                                    console.log(response)
                                     if (response.data.note === true) {
                                         alert(`Invitation sent successfully \n The amount of orders left in your possession: ${response.data.numOfInv}`);
                                     }
