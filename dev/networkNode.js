@@ -50,7 +50,8 @@ fs.appendFileSync('masterKeysForDelete.txt', '\npublicKey: ' + public_key);
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /*  -Create a database named "invitationsDB" on first time-  */
 ///////////////////////////////////////////////////////////////////////////////////////////////
-var url = "mongodb://localhost:27017/invitationsDB";
+// var url = "mongodb://localhost:27017/invitationsDB";
+var url = "mongodb+srv://ochimot:Vandai1506@cluster0.7w7uc.mongodb.net/invitationsDB"
 MongoClient.connect(url, function (err, db) {
     if (err) throw err;
     let dbo = db.db("invitationsDB");
