@@ -126,8 +126,8 @@ io.on('connection', (socket) => {
     /*  -On connection of socket-  */
     nodes.push(new Blockchain(socket.id));
     socket.emit('PT', backup.pendingTransactions);//emit to that specific socket
-    console.log("io.on(connection), backup.getAllTransactions" );
-    console.log(backup.getAllTransactions());
+    // console.log("io.on(connection), backup.getAllTransactions" );
+    // console.log(backup.getAllTransactions());
     socket.emit('Hist',backup.getAllTransactions());
     console.log('New user connected');
     console.log(socket.id);
@@ -196,7 +196,7 @@ io.on('connection', (socket) => {
         const previousBlockHash = lastBlock['hash'];
         AllTransactions = backup.getAllTransactions();
         io.clients().emit('Hist', AllTransactions);
-        console.log("--mine: backup.pendingTransactions: ",AllTransactions);
+        // console.log("--mine: backup.pendingTransactions: ",AllTransactions);
         const currentBlockData = {
             transactions: backup.pendingTransactions,
             index: lastBlock['index'] + 1
@@ -285,8 +285,8 @@ io.on('connection', (socket) => {
     });
     app.get('/histTransactions', (req, res) => {
         const transactionsData = backup.getAllTransactions();
-        console.log("--/histTransactions: ");
-        console.log(transactionsData);
+        // console.log("--/histTransactions: ");
+        // console.log(transactionsData);
         res.json({
             histTransactions: transactionsData
         });
