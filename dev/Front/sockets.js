@@ -70,9 +70,9 @@ socket.on('Hist',(ht)=>{
     console.log("---", ht.length);
     var rows = document.getElementById("HistTransactions").getElementsByTagName("tr").length;
     for (let i = 0; i < ht.length; i++) {//i used JQuery to display the table
-        if(ht[i].sender !== "system-reward"){
-            ht[i].amount = ht[i].amount/(1.01);
-        }
+        // if(ht[i].sender !== "system-reward"){
+        //     ht[i].amount = ht[i].amount/(1.01);
+        // }
         if (objForDupCheck !== null)
             if (ht[i].transactionId === objForDupCheck.transactionId)
                 continue;
@@ -101,9 +101,9 @@ socket.on('PT', (pt) => {
 
 
     for (let i = 0; i < pt.length; i++) {//i used JQuery to display the table
-        if(pt[i].sender !== "system-reward"){
-            pt[i].amount = pt[i].amount/(1.01);   
-        }
+        // if(pt[i].sender !== "system-reward"){
+        //     pt[i].amount = pt[i].amount/(1.01);   
+        // }
         if (objForDupCheck !== null)
             if (pt[i].transactionId === objForDupCheck.transactionId)
                 continue;

@@ -42,6 +42,7 @@ Blockchain.prototype.getLastBlock = function () {
 
 /*init a transaction into pendingTransactions.*/
 Blockchain.prototype.createNewTransaction = function (amount, sender, recipient) {
+    // amount = amount/1.01;
     const newTransaction = {
         transactionId: uuid().split('-').join(''),
         amount: amount,
@@ -132,7 +133,7 @@ Blockchain.prototype.getAllTransactions = function(){
 
     this.chain.forEach(block => {
         block.transactions.forEach(transaction => {
-            console.log(transaction);
+            // console.log(transaction);
             transactions.push(transaction);
         });
     });
@@ -165,7 +166,7 @@ Blockchain.prototype.getAddressData = function (address) {
             amountArr.push(balance);
         }
         else if (transaction.sender === address) {
-            balance -= transaction.amount;
+            balance -= (transaction.amount + transaction.amount*0.01);
             amountArr.push(balance);
         }
     

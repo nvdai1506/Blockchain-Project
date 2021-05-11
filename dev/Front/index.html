@@ -934,7 +934,7 @@
 
             $scope.transactionCoins = function (amountToTransfer, privKey, pubKey, pubKeyOfRecipient) {
                 console.log("--transactionCoins");
-                amountToTransfer = parseInt(amountToTransfer)+amountToTransfer*0.01
+                // amountToTransfer = parseInt(amountToTransfer)+amountToTransfer*0.01
                 $http({
                     url: '/transaction/broadcast',
                     method: "POST",
@@ -1018,7 +1018,7 @@
                         }
                         else {
                             console.log("ok");
-                            $http.get('/mine')
+                            $http.get(`/mine/${key2}`)
                                 .then(response => {//mining sccess
                                     console.log("--http.get('/mine')");
                                     $("#lastTransactionsTable td").remove();

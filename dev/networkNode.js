@@ -155,6 +155,8 @@ io.on('connection', (socket) => {
             /*  -Authentication: check if user have the require amount of coins for current transaction && if user exist in the blockchain-  */
             const addressData = backup.getAddressData(req.body.sender);
             const addressData1 = backup.getAddressData(req.body.recipient);
+            console.log("addressData: ", addressData);
+            console.log("adsressData1: ", addressData1);
             if (addressData.addressBalance < amount || addressData === false || addressData1 === false) {
                 flag = false;
                 res.json({
@@ -190,8 +192,8 @@ io.on('connection', (socket) => {
     * Title: Miner section
     * Description: user mine the last block of transaction by POW, getting reward and init a new block
     */
-    app.get('/mine', (req, res) => {
-        // var publickey = req.params.publickey;
+    app.get('/mine/:key2', (req, res) => {
+        var publickey = req.params.key2;
         const lastBlock = backup.getLastBlock();
         const previousBlockHash = lastBlock['hash'];
         AllTransactions = backup.getAllTransactions();
@@ -220,7 +222,7 @@ io.on('connection', (socket) => {
                     body: {
                         amount: 12.5,
                         sender: "system-reward",
-                        recipient: public_key
+                        recipient: publickey
                     },
                     json: true
                 };
@@ -277,8 +279,8 @@ io.on('connection', (socket) => {
     */
     app.get('/pendingTransactions', (req, res) => {
         const transactionsData = backup.getPendingTransactions();
-        console.log("--/pendingTransactions: ");
-        console.log(transactionsData);
+        // console.log("--/pendingTransactions: ");
+        // console.log(transactionsData);
         res.json({
             pendingTransactions: transactionsData
         });
