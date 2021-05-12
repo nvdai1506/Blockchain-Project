@@ -73,19 +73,18 @@ socket.on('Hist',(ht)=>{
         if (objForDupCheck !== null)
             if (ht[i].transactionId === objForDupCheck.transactionId)
                 continue;
-        if(ht[i].amount!= 1000000 || ht[i].sender!="system-reward")
-        {
-            $('#HistTransactionsTable > tbody:last-child').append('<tr>' +
-            '<td style="font-size:x-small; max-width: 100px;">' +
-            ht[i].transactionId + '</td>' +
-            '<td style="font-size:x-small; max-width: 220px;">' +
-            ht[i].sender + '</td>' +
-            '<td style="font-size:x-small; max-width: 220px;">' +
-            ht[i].recipient + '</td>' +
-            '<td>' +
-            ht[i].amount + '</td>' +
-            '</tr >');
-        }
+        
+        $('#HistTransactionsTable > tbody:last-child').append('<tr>' +
+        '<td style="font-size:x-small; max-width: 100px;">' +
+        ht[i].transactionId + '</td>' +
+        '<td style="font-size:x-small; max-width: 220px;">' +
+        ht[i].sender + '</td>' +
+        '<td style="font-size:x-small; max-width: 220px;">' +
+        ht[i].recipient + '</td>' +
+        '<td>' +
+        ht[i].amount + '</td>' +
+        '</tr >');
+        
         objForDupCheck = ht[i];
     }
 });
