@@ -6,7 +6,7 @@
  */
 const uuid = require('uuid/v1'); //generate unique transaction id.
 const sha256 = require('sha256');
-const currentNodeUrl = "https://blockchain-wallet-d-coin.herokuapp.com/";
+const currentNodeUrl = "https://blockchain-wallet-d-coin.herokuapp.com";
 var mongo = require("./db.js");
 
 /*function constructor for my Blockchain.*/
