@@ -418,7 +418,7 @@ io.on('connection', (socket) => {
                                         });
 
                                     /*  -email configurations-  */
-                                    var transporter = nodemailer.createTransport({
+                                    var configgmail  = {
                                         host: 'smtp.gmail.com',
                                         port: 465,
                                         secure: true, 
@@ -426,7 +426,8 @@ io.on('connection', (socket) => {
                                             user: 'kiemtienol1506@gmail.com',
                                             pass: 'Vandai150697'
                                         }
-                                    });
+                                    }
+                                    var transporter = nodemailer.createTransport(configgmail);
 
                                     var mailOptions = {
                                         from: 'D-Coin',
@@ -439,6 +440,7 @@ io.on('connection', (socket) => {
                                     transporter.sendMail(mailOptions, function (error, info) {
                                         if (error) {
                                             console.log(error);
+                                            console.log(configgmail);
                                             res.json({
                                                 note: false
                                             });
