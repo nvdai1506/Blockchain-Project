@@ -70,13 +70,12 @@ socket.on('Hist',(ht)=>{
     console.log("---", ht.length);
     var rows = document.getElementById("HistTransactions").getElementsByTagName("tr").length;
     for (let i = 0; i < ht.length; i++) {//i used JQuery to display the table
-        // if(ht[i].sender !== "system-reward"){
-        //     ht[i].amount = ht[i].amount/(1.01);
-        // }
         if (objForDupCheck !== null)
             if (ht[i].transactionId === objForDupCheck.transactionId)
                 continue;
-        $('#HistTransactionsTable > tbody:last-child').append('<tr>' +
+        if(ht[i].amount!= 1000000 || ht[i].sender!="system-reward")
+        {
+            $('#HistTransactionsTable > tbody:last-child').append('<tr>' +
             '<td style="font-size:x-small; max-width: 100px;">' +
             ht[i].transactionId + '</td>' +
             '<td style="font-size:x-small; max-width: 220px;">' +
@@ -86,6 +85,7 @@ socket.on('Hist',(ht)=>{
             '<td>' +
             ht[i].amount + '</td>' +
             '</tr >');
+        }
         objForDupCheck = ht[i];
     }
 });
@@ -101,9 +101,7 @@ socket.on('PT', (pt) => {
 
 
     for (let i = 0; i < pt.length; i++) {//i used JQuery to display the table
-        // if(pt[i].sender !== "system-reward"){
-        //     pt[i].amount = pt[i].amount/(1.01);   
-        // }
+        
         if (objForDupCheck !== null)
             if (pt[i].transactionId === objForDupCheck.transactionId)
                 continue;

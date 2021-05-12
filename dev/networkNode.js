@@ -31,12 +31,6 @@ var mongo = require("./db.js");
 /*  -Initialize blockchain first time & create a master user-  */
 ///////////////////////////////////////////////////////////////////////////////////////////////
 const backup = new Blockchain();
-// (async() => {
-//     var mongo_load_chain = await mongo.load_chain();
-//     console.log(mongo_load_chain); 
-// })()
-
-
 // const privateKey = uuid().split('-').join(''); //privateKey
 // console.log("privateKey: ", privateKey)
 // const public_key = sha256(privateKey); //publicKey
@@ -58,16 +52,16 @@ MongoClient.connect(url, function (err, db) {
         {
             const master = backup.createNewTransaction(1000000, "system-reward", result[0].key);
             backup.chain[0].transactions.push(master);
-            var newblock= backup.chain[0];
-            mongo.insert_block_into_chain(newblock);
+            // var newblock= backup.chain[0];
+            // mongo.insert_block_into_chain(newblock);
             console.log('Collection already exist');
         }
         else {
             
             const master = backup.createNewTransaction(1000000, "system-reward", public_key);
             backup.chain[0].transactions.push(master);
-            var newblock= backup.chain[0];
-            mongo.insert_block_into_chain(newblock);
+            // var newblock= backup.chain[0];
+            // mongo.insert_block_into_chain(newblock);
             ///////////////////////////////////////////////////////////////////////////////////////////////
             /*  -Alert: the file 'masterKeysForDelete.txt' content need to be deleted after first init-  */
             fs.appendFileSync('masterKeysForDelete.txt', '\nprivateKey: ' + privateKey);
