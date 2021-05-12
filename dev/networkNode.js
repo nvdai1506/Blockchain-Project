@@ -26,11 +26,16 @@ var server = http.createServer(app);
 var nodemailer = require('nodemailer');
 var forge = require('node-forge');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";//fixing nodemailer
-
+var mongo = require("./db.js");
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /*  -Initialize blockchain first time & create a master user-  */
 ///////////////////////////////////////////////////////////////////////////////////////////////
 const backup = new Blockchain();
+// (async() => {
+//     var mongo_load_chain = await mongo.load_chain();
+//     console.log(mongo_load_chain); 
+// })()
+
 
 // const privateKey = uuid().split('-').join(''); //privateKey
 // console.log("privateKey: ", privateKey)
@@ -51,14 +56,18 @@ MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         if (result.length !== 0)
         {
-            const master = backup.createNewTransaction(result[0].inv, "system-reward", result[0].key);
+            const master = backup.createNewTransaction(1000000, "system-reward", result[0].key);
             backup.chain[0].transactions.push(master);
+            var newblock= backup.chain[0];
+            mongo.insert_block_into_chain(newblock);
             console.log('Collection already exist');
         }
         else {
             
             const master = backup.createNewTransaction(1000000, "system-reward", public_key);
             backup.chain[0].transactions.push(master);
+            var newblock= backup.chain[0];
+            mongo.insert_block_into_chain(newblock);
             ///////////////////////////////////////////////////////////////////////////////////////////////
             /*  -Alert: the file 'masterKeysForDelete.txt' content need to be deleted after first init-  */
             fs.appendFileSync('masterKeysForDelete.txt', '\nprivateKey: ' + privateKey);
@@ -155,8 +164,8 @@ io.on('connection', (socket) => {
             /*  -Authentication: check if user have the require amount of coins for current transaction && if user exist in the blockchain-  */
             const addressData = backup.getAddressData(req.body.sender);
             const addressData1 = backup.getAddressData(req.body.recipient);
-            console.log("addressData: ", addressData);
-            console.log("adsressData1: ", addressData1);
+            // console.log("addressData: ", addressData);
+            // console.log("adsressData1: ", addressData1);
             if (addressData.addressBalance < amount || addressData === false || addressData1 === false) {
                 flag = false;
                 res.json({
@@ -198,15 +207,17 @@ io.on('connection', (socket) => {
         const previousBlockHash = lastBlock['hash'];
         AllTransactions = backup.getAllTransactions();
         io.clients().emit('Hist', AllTransactions);
+        
         // console.log("--mine: backup.pendingTransactions: ",AllTransactions);
         const currentBlockData = {
             transactions: backup.pendingTransactions,
             index: lastBlock['index'] + 1
         }
-
+        
         const nonce = backup.proofOfWork(previousBlockHash, currentBlockData);//doing a proof of work
         const blockHash = backup.hashBlock(previousBlockHash, currentBlockData, nonce);//hash the block
         const newBlock = backup.createNewBlock(nonce, previousBlockHash, blockHash);//create a new block with params
+        // console.log("--mine: remove_pendingTransaction: ", backup.pendingTransactions);
         
         const requestOptions = {//a promise to make a new block
             uri: backup.currentNodeUrl + '/receive-new-block',
@@ -216,6 +227,8 @@ io.on('connection', (socket) => {
         };
         rp(requestOptions)
             .then(data => {//reward the miner after mining succed and new block already created
+                
+                
                 const requestOptions = {
                     uri: backup.currentNodeUrl + '/transaction/broadcast',
                     method: 'POST',
@@ -407,6 +420,8 @@ io.on('connection', (socket) => {
                                     /*  -email configurations-  */
                                     var transporter = nodemailer.createTransport({
                                         host: 'smtp.gmail.com',
+                                        port: 465,
+                                        secure: true, 
                                         auth: {
                                             user: 'kiemtienol1506@gmail.com',
                                             pass: 'Vandai150697'
@@ -588,7 +603,7 @@ app.post('/confirmRegister', (req, res) => {
 
                 let user = {
                     key: recipient_public_key,
-                    inv: 2,
+                    inv: 100,
                     availableInvitations: []
                 };
                 //init new user in db - the master.

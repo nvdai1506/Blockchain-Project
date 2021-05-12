@@ -7,7 +7,7 @@
 const uuid = require('uuid/v1'); //generate unique transaction id.
 const sha256 = require('sha256');
 const currentNodeUrl = process.argv[3];
-
+var mongo = require("./db.js");
 
 /*function constructor for my Blockchain.*/
 function Blockchain(socketID) {
@@ -21,6 +21,7 @@ function Blockchain(socketID) {
 
 /*init a new block to the chain and insert pending transactions into the block.*/
 Blockchain.prototype.createNewBlock = function (nonce, previousBlockHash, hash) {
+    // console.log("Create new block");
     const newBlock = {
         index: this.chain.length + 1,
         timestamp: Date.now(),
@@ -30,11 +31,20 @@ Blockchain.prototype.createNewBlock = function (nonce, previousBlockHash, hash) 
         hash: hash,
         previousBlockHash: previousBlockHash
     }
+    mongo.insert_block_into_chain(newBlock);
+    this.pendingTransactions.forEach(transaction => {
+        mongo.remove_pendingTransaction(transaction.transactionId);
+    });
     this.pendingTransactions = []; //reset the pendingTransactions for the next block.
     this.chain.push(newBlock); //push to the blockchain the new block.
     return newBlock;
 }
-
+Blockchain.prototype.add_block_into_chain_from_db = function(newBlock){
+    this.chain.push(newBlock);
+}
+Blockchain.prototype.add_penddingTransaction_from_db = function(pendingTransaction){
+    this.pendingTransactions.push(pendingTransaction);
+}
 /*returns the last block of the chain.*/
 Blockchain.prototype.getLastBlock = function () {
     return this.chain[this.chain.length - 1];
@@ -42,7 +52,6 @@ Blockchain.prototype.getLastBlock = function () {
 
 /*init a transaction into pendingTransactions.*/
 Blockchain.prototype.createNewTransaction = function (amount, sender, recipient) {
-    // amount = amount/1.01;
     const newTransaction = {
         transactionId: uuid().split('-').join(''),
         amount: amount,
@@ -50,7 +59,10 @@ Blockchain.prototype.createNewTransaction = function (amount, sender, recipient)
         sender: sender,
         recipient: recipient
     }
-
+    
+    if( amount!=1000000 || sender !="system-reward"){
+        mongo.insert_pendingTransaction_into_pendingTransactions(newTransaction);
+    }
     return newTransaction;
 }
 
@@ -178,6 +190,9 @@ Blockchain.prototype.getAddressData = function (address) {
         amountArr: amountArr
     };
 };
+Blockchain.prototype.addTransactionIntoChain =  function(chain, newTransaction){
+    
+}
 
 
 module.exports = Blockchain;
