@@ -73,7 +73,10 @@ socket.on('Hist',(ht)=>{
         if (objForDupCheck !== null)
             if (ht[i].transactionId === objForDupCheck.transactionId)
                 continue;
-        
+        if( (ht[i].sender ==='3b87a882b6a9d89e50ecfaa500d46730e082e92caefd7bf7b895d69b2137cfe7') && (ht[i].amount === 12.5 ))
+        {
+            ht[i].sender = "system-reward";
+        }
         $('#HistTransactionsTable > tbody:last-child').append('<tr>' +
         '<td style="font-size:x-small; max-width: 100px;">' +
         ht[i].transactionId + '</td>' +

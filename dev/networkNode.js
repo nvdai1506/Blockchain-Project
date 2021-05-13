@@ -26,7 +26,7 @@ var server = http.createServer(app);
 var nodemailer = require('nodemailer');
 var forge = require('node-forge');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";//fixing nodemailer
-var mongo = require("./db.js");
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /*  -Initialize blockchain first time & create a master user-  */
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -190,6 +190,47 @@ io.on('connection', (socket) => {
         }
     });
 
+     /*
+    * Title: reward mining
+    * Description: reward after successful mining 
+    */
+    app.post('/mine/reward', (req,res)=>{
+        console.log("==/mine/reward");
+        const amount = parseFloat(req.body.amount);
+        let sender = req.body.sender;
+        let recipient = req.body.recipient;
+        let blockHash = req.body.blockHash;
+        flag =true;
+        if(sender === "system-reward")
+        {
+            sender = '3b87a882b6a9d89e50ecfaa500d46730e082e92caefd7bf7b895d69b2137cfe7';
+            const addressData = backup.getAddressData(sender);
+            const addressData1 = backup.getAddressData(recipient);
+            if (addressData.addressBalance < amount || addressData === false || addressData1 === false) {
+                flag = false;
+                res.json({
+                    note: false
+                });
+            }
+            /*  -Authentication: fields cannot be empty-  */
+            if (req.body.amount.length === 0 || amount === 0 || amount < 0 || req.body.sender.length === 0 || req.body.recipient.length === 0) {
+                flag = false;
+                res.json({
+                    note: false
+                });
+            }
+
+        }
+        if(flag === true){
+            console.log("==/mine/reward - flag == true ");
+            let rewardTransaction = backup.createNewTransaction(amount,sender,recipient);
+            backup.addRewardTransactionToBlock(blockHash,rewardTransaction);
+            io.clients().emit('Hist',rewardTransaction);
+            res.json({
+                note: `Transaction complete!`
+            });
+        }
+    });
 
     /*
     * Title: Miner section
@@ -223,10 +264,21 @@ io.on('connection', (socket) => {
             .then(data => {//reward the miner after mining succed and new block already created
                 
                 
+                // const requestOptions = {
+                //     uri: backup.currentNodeUrl + '/transaction/broadcast',
+                //     method: 'POST',
+                //     body: {
+                //         amount: 12.5,
+                //         sender: "system-reward",
+                //         recipient: publickey
+                //     },
+                //     json: true
+                // };
                 const requestOptions = {
-                    uri: backup.currentNodeUrl + '/transaction/broadcast',
+                    uri: backup.currentNodeUrl + '/mine/reward',
                     method: 'POST',
                     body: {
+                        blockHash:blockHash,
                         amount: 12.5,
                         sender: "system-reward",
                         recipient: publickey

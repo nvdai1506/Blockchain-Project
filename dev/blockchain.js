@@ -7,7 +7,7 @@
 const uuid = require('uuid/v1'); //generate unique transaction id.
 const sha256 = require('sha256');
 const currentNodeUrl = "https://blockchain-wallet-d-coin.herokuapp.com";
-var mongo = require("./db.js");
+
 
 /*function constructor for my Blockchain.*/
 function Blockchain(socketID) {
@@ -31,20 +31,11 @@ Blockchain.prototype.createNewBlock = function (nonce, previousBlockHash, hash) 
         hash: hash,
         previousBlockHash: previousBlockHash
     }
-    // mongo.insert_block_into_chain(newBlock);
-    // this.pendingTransactions.forEach(transaction => {
-    //     mongo.remove_pendingTransaction(transaction.transactionId);
-    // });
     this.pendingTransactions = []; //reset the pendingTransactions for the next block.
     this.chain.push(newBlock); //push to the blockchain the new block.
     return newBlock;
 }
-// Blockchain.prototype.add_block_into_chain_from_db = function(newBlock){
-//     this.chain.push(newBlock);
-// }
-// Blockchain.prototype.add_penddingTransaction_from_db = function(pendingTransaction){
-//     this.pendingTransactions.push(pendingTransaction);
-// }
+
 /*returns the last block of the chain.*/
 Blockchain.prototype.getLastBlock = function () {
     return this.chain[this.chain.length - 1];
@@ -60,9 +51,6 @@ Blockchain.prototype.createNewTransaction = function (amount, sender, recipient)
         recipient: recipient
     }
     
-    // if( amount!=1000000 || sender !="system-reward"){
-    //     mongo.insert_pendingTransaction_into_pendingTransactions(newTransaction);
-    // }
     return newTransaction;
 }
 
@@ -190,7 +178,12 @@ Blockchain.prototype.getAddressData = function (address) {
         amountArr: amountArr
     };
 };
-
+Blockchain.prototype.addRewardTransactionToBlock = function (blockHash, rewardTransaction) {
+    this.chain.forEach(block => {
+        if (block.hash === blockHash)
+            block.transactions.push(rewardTransaction);
+    });
+}
 
 
 module.exports = Blockchain;
