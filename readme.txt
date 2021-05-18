@@ -1,4 +1,4 @@
-change link:  https://blockchain-wallet-d-coin.herokuapp.com/
+change all links:  https://blockchain-wallet-d-coin.herokuapp.com/
 to: http://localhost:3001
 => run as local
 Befor running , install npm:
